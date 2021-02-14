@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,36 +11,37 @@ public class ThirdPersonMovement : MonoBehaviour
     // TODO: Figure out Unity and/or C# comment system and describe wtf is going on here
     // TODO: Implement update/fix for Cinemachine for good 3PC
     // TODO: More advanced movement system
-    
-    #region External references
+
+    #region Variables
+    [Header("External References")]
     public CharacterController controller;
     public Transform cam;
     public Transform groundCheck;
-    #endregion
     
     // Variables
-    #region Input Variables
+    [Header("Input Calculation")]
+    [ReadOnly]
     protected Vector3 LastMoveInput;
-    #endregion
     
-    #region Movement Variables
+    [Header("Movement")]
     public Vector3 velocity;
     public float gravity;
     public bool isGrounded;
     protected float MoveSpeed;
     
+    [Header("Ground Collision Checks")]
     public float groundCheckRadius;
     public LayerMask groundCollisionMask;
-    #endregion
-    
-    #region Jump Variables
+
+    [Header("Jumping")]
     protected Vector3 JumpVec;
     public float jumpForce;
     public bool tryingToJump;
-    #endregion
-    
+
+    [Header("Rotation")]
     public float rotSmoothTime;
     private float _rotSmoothVel;
+    #endregion
 
     // Constructor
     public ThirdPersonMovement()
