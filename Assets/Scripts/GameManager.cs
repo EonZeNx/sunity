@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public GameObject GetLocalPlayer()
+    {
+        return GameObject.FindGameObjectWithTag("Player");
+    }
+
     #region GameManager Lifecycle Methods
 
     void Start()

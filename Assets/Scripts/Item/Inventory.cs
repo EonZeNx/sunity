@@ -22,6 +22,14 @@ public class Inventory
         this.Cols = Cols;
 
         ItemSlots = new ItemStack[Rows, Cols];
+
+        for (int row = 0; row < Rows; row++)
+        {
+            for (int col = 0; col < Cols; col++)
+            {
+                ItemSlots[row, col] = new ItemStack(GameManager.NULL_ITEM_ID, 0);
+            }
+        }
     }
 
     #endregion
