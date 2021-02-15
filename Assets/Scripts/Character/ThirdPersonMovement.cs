@@ -104,11 +104,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (LastMoveInput.magnitude < 0.1f) { return; }
         
-        // x then z due to Unity's different coord layout
+        // // x then z due to Unity's different coord layout
         float rotTargetAngle = Mathf.Atan2(LastMoveInput.x, LastMoveInput.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        float rotActualAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotTargetAngle,
-            ref _rotSmoothVel, rotSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, rotActualAngle, 0f);
+        // float rotActualAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotTargetAngle,
+        //     ref _rotSmoothVel, rotSmoothTime);
+        // transform.rotation = Quaternion.Euler(0f, rotActualAngle, 0f);
 
         Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
         controller.Move(MoveSpeed * Time.deltaTime * moveDirection.normalized);

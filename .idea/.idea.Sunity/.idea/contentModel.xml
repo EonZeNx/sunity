@@ -98,9 +98,14 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Camera" t="Include">
+            <e p="CinemachineInputProvider.cs" t="Include" />
+          </e>
           <e p="Character" t="Include">
+            <e p="IndependentBodyRotation.cs" t="Include" />
             <e p="ThirdPersonMovement.cs" t="Include" />
           </e>
+          <e p="GameManager.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
