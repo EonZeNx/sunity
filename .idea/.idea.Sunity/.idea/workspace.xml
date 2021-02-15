@@ -2,48 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30067b42-569e-433b-887f-9cc17ad1868c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Camera.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Camera/CinemachineInputProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_4.tga" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_4.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_5.tga" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_5.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_6.tga" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/BlockoutTextures/Blockout_Test_Texture_6.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_1_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2_Square.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_2_Square.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3_Pyramid.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_3_Pyramid.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4_Hexagon.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4_Hexagon.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_4_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_5_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_5_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Cylinder.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Cylinder.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Light.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Light.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Low_Sphere.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/Pin_6_Low_Sphere.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/pin_Master.psd" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/pin_Master.psd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/BlockoutRuler.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/BlockoutRuler.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Particle_Square.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Particle_Square.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Particle_Square_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Particle_Square_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Trigger.tga" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Trigger.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Water.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Textures/Blockout_Water.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/FreeLookAddOn.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/FreeLookAddOn.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MLAPI/Lib/MLAPI-Installer.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MLAPI/Lib/MLAPI.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +17,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2FAE0A4C-BCEC-42C9-ACC6-16494AA88F69/8d/ef1db73b/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2FAE0A4C-BCEC-42C9-ACC6-16494AA88F69/c1/5bdd599b/Mathf.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/CinemachineInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4B174777-563D-4A31-A6EC-AD2BF865B856/48/f7d4cabf/CharacterController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2FAE0A4C-BCEC-42C9-ACC6-16494AA88F69/d3/4f46a0d4/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
@@ -121,7 +83,7 @@
       <updated>1613278525898</updated>
       <workItem from="1613278532441" duration="16367000" />
       <workItem from="1613342480446" duration="74000" />
-      <workItem from="1613342557835" duration="4513000" />
+      <workItem from="1613342557835" duration="6883000" />
     </task>
     <servers />
   </component>
