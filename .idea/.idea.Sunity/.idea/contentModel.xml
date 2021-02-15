@@ -103,6 +103,7 @@
           </e>
           <e p="Character" t="Include">
             <e p="IndependentBodyRotation.cs" t="Include" />
+            <e p="Movement.cs" t="Include" />
             <e p="ThirdPersonMovement.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />

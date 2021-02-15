@@ -456,6 +456,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 963194228}
+    - target: {fileID: 6788597360757141172, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}
+      propertyPath: lastVel.x
+      value: 0.27
+      objectReference: {fileID: 0}
     - target: {fileID: 6788597360757141174, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}
       propertyPath: cam
       value: 
@@ -506,15 +510,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6788597361287523218, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06213745
+      value: 0.062137432
       objectReference: {fileID: 0}
     - target: {fileID: 6788597361287523218, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017173132
+      value: 0.000000017173132
       objectReference: {fileID: 0}
     - target: {fileID: 6788597361287523218, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000010691605
+      value: -0.0000000010691601
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4bdd4c30c789dc4db71e4c2225ff691, type: 3}

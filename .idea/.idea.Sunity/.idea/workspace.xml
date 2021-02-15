@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30067b42-569e-433b-887f-9cc17ad1868c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sunity.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sunity.inputactions" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +85,7 @@
       <updated>1613278525898</updated>
       <workItem from="1613278532441" duration="16367000" />
       <workItem from="1613342480446" duration="74000" />
-      <workItem from="1613342557835" duration="6883000" />
+      <workItem from="1613342557835" duration="10938000" />
     </task>
     <servers />
   </component>
