@@ -7,11 +7,11 @@ public class IndependentBodyRotation : MonoBehaviour
     /// <summary>
     /// References to the independently rotating parts
     /// </summary>
-    public GameObject upperBody;
-    public GameObject lowerBody;
+    public Transform upperBody;
+    public Transform lowerBody;
 
     public CharacterController controller;
-    public Camera cam;
+    public Transform cam;
 
     /// <summary>
     /// Target vectors for both parts of the body
@@ -29,12 +29,18 @@ public class IndependentBodyRotation : MonoBehaviour
 
     public void Update()
     {
-        float targetAngle = cam.transform.eulerAngles.y;
-        float actualAngle = upperBody.transform.eulerAngles.y;
+        float currentUpperBodyAngle = upperBody.transform.eulerAngles.y;
+        float currentLowerBodyAngle = lowerBody.transform.eulerAngles.y;
+        float lookAngle = cam.transform.eulerAngles.y;
         
-        float rotUpperBodyAngle = Mathf.SmoothDampAngle(gameObject.transform.eulerAngles.y, targetAngle - actualAngle,
-            ref smoothVelUpperBody, smoothTimeUpperBody);
-        
-        upperBody.transform.Rotate(Vector3.up, rotUpperBodyAngle * Time.deltaTime);
+        Vector3 playerVelocity = controller.velocity;
+        playerVelocity.y = 0;
+        float playerVelocityAngle = Mathf.Atan2(playerVelocity.x, playerVelocity.z) * Mathf.Rad2Deg;
+
+        float targetUpperBodyAngle = Mathf.SmoothDampAngle(currentUpperBodyAngle, lookAngle, ref smoothVelUpperBody, smoothTimeUpperBody);
+        float targetLowerBodyAngle = Mathf.SmoothDampAngle(currentLowerBodyAngle, playerVelocityAngle, ref smoothVelLowerBody, smoothTimeLowerBody);
+
+        upperBody.transform.Rotate(Vector3.up, targetUpperBodyAngle - currentUpperBodyAngle);
+        lowerBody.transform.Rotate(Vector3.up, targetLowerBodyAngle - currentLowerBodyAngle);
     }
 }
