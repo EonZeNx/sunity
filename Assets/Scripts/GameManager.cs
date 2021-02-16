@@ -3,7 +3,9 @@ using MLAPI.Serialization.Pooled;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,7 +38,15 @@ public class GameManager : MonoBehaviour
 
     #region Variables
 
-    public readonly IDictionary<string, Item> ItemDefinitions = new Dictionary<string, Item>();
+    public readonly IList<Item> ItemDefinitions = new List<Item>();
+
+    #endregion
+
+    #region UI
+
+    public InventoryUI InventoryUI;
+    public HotbarInventoryUI HotbarUI;
+    public Text InteractionText;
 
     #endregion
 
@@ -44,15 +54,43 @@ public class GameManager : MonoBehaviour
 
     void InitItemAndInventory()
     {
-        ItemDefinitions.Add("null", new Item("Null", "Used to represent empty space.", 0));
-        ItemDefinitions.Add("knife", new Item("Hunting Knife", "A sharp blade used for hunting and utility.", 1));
-        ItemDefinitions.Add("bandage", new Item("Bandage", "Bandages will give a small HP revovery.", 20));
+        var ItemSprites = Resources.LoadAll<Sprite>("Sprites/items");
+
+        ItemDefinitions.Add(new Item(
+            "null",
+            "Null",
+            "Used to represent empty space.",
+            0,
+            ItemSprites.Single(sprite => sprite.name == "null")
+            ));
+        ItemDefinitions.Add(new Item(
+            "knife", 
+            "Hunting Knife", 
+            "A sharp blade used for hunting and utility.", 
+            1,
+            ItemSprites.Single(sprite => sprite.name == "knife")
+            ));
+        ItemDefinitions.Add(new HealingItem(
+            "bandage", 
+            "Bandage", 
+            "Bandages will give a small HP revovery.", 
+            20,
+            ItemSprites.Single(sprite => sprite.name == "bandage")
+            ));
     }
 
+    /// <summary>
+    /// Needed to allow serialization for item stacks and inventory.
+    /// </summary>
     void InitItemAndInventoryNetworking()
     {
         SerializationManager.RegisterSerializationHandlers(Inventory.OnSerialize, Inventory.OnDeserialize);
         SerializationManager.RegisterSerializationHandlers(ItemStack.OnSerialize, ItemStack.OnDeserialize);
+    }
+
+    public Item GetItemById(string id)
+    {
+        return ItemDefinitions.First(item => item.Id == id);
     }
 
     #endregion
@@ -60,6 +98,12 @@ public class GameManager : MonoBehaviour
     public GameObject GetLocalPlayer()
     {
         return GameObject.FindGameObjectWithTag("Player");
+    }
+
+    public CharacterInventory GetLocalPlayerInventory()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        return player.GetComponent<CharacterInventory>();
     }
 
     #region GameManager Lifecycle Methods

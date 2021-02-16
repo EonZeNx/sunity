@@ -31,7 +31,7 @@ public class ItemStack
     public Item GetItemDefinition()
     {
         var gameManager = GameManager.Instance;
-        return gameManager.ItemDefinitions[ItemId];
+        return gameManager.GetItemById(ItemId);
     }
 
     /// <summary>
@@ -84,6 +84,7 @@ public class ItemStack
             if (Quantity > GetItemMaxStackQuantity())
             {
                 var overflow = Quantity - GetItemMaxStackQuantity();
+                Quantity = GetItemMaxStackQuantity();
                 result.Quantity = overflow;
             }
         }
@@ -110,18 +111,21 @@ public class ItemStack
         {
             ItemId = other.ItemId;
             Quantity += 1;
+            result.Quantity -= 1;
         }
-        else if (!IsEmpty() && other.IsEmpty()) // If other stack is empty, move one from this to other
+        else if (!IsEmpty() && other.IsEmpty()) // If other stack is empty, halve it.
         {
             result.ItemId = ItemId;
-            result.Quantity += 1;
+            var quantityToMove = Quantity / 2;
+            result.Quantity += quantityToMove;
+            Quantity -= quantityToMove;
         }
         else if (ItemId == other.ItemId) // If they are the same item, try to move one from other to this
         {
             if (Quantity < GetItemMaxStackQuantity())
             {
                 Quantity += 1;
-                other.Quantity -= 1;
+                result.Quantity -= 1;
             }
         }
 
@@ -158,7 +162,7 @@ public class ItemStack
     public ItemStack SwapWith(ItemStack other)
     {
         // Store original in temporary variable
-        var temp = this;
+        var temp = new ItemStack(ItemId, Quantity);
 
         // Set original to other
         ItemId = other.ItemId;

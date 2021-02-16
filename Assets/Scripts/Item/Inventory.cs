@@ -11,8 +11,8 @@ public class Inventory
 {
     #region Fields and Constructor
 
-    private int Rows;
-    private int Cols;
+    public readonly int Rows;
+    public readonly int Cols;
 
     private readonly ItemStack[,] ItemSlots;
 
@@ -65,7 +65,7 @@ public class Inventory
     /// <returns></returns>
     public ItemStack InsertItemStackIntoInventory(ItemStack itemStack)
     {
-        for (int row = 0; row < Rows; row++)
+        for (int row = Rows-1; row >= 0; row--) // Top row takes priority
         {
             for (int col = 0; col < Cols; col++)
             {
@@ -83,6 +83,7 @@ public class Inventory
                     if (slot.Quantity > slot.GetItemMaxStackQuantity())
                     {
                         overflow = slot.Quantity - slot.GetItemMaxStackQuantity();
+                        slot.Quantity = slot.GetItemMaxStackQuantity();
                     }
                     itemStack.Quantity = overflow;
 
