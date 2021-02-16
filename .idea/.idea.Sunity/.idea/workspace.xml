@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30067b42-569e-433b-887f-9cc17ad1868c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Prefab/Entity.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefab/Entity.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/EntityCore.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/EntityCore.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/MovementComponent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/MovementComponent.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/TestMove.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Character/TestMove.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Sunity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Pins/SM_Pins.FBX" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Blockout/Resources/Blockout/Ruler/SM_Ruler_Pivot.FBX" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Movement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Movement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Sunity.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sunity.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +34,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2FAE0A4C-BCEC-42C9-ACC6-16494AA88F69/c1/5bdd599b/Mathf.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Camera/CinemachineInputProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/62FFEEB7-EC02-4BEA-B61E-5FBF8D44AC5B/c9/9101106d/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4B174777-563D-4A31-A6EC-AD2BF865B856/48/f7d4cabf/CharacterController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2FAE0A4C-BCEC-42C9-ACC6-16494AA88F69/d3/4f46a0d4/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3CAC690A-C35D-41D7-B077-BBE6DD7026F8/ae/cf7cfd49/Input.cs" root0="SKIP_HIGHLIGHTING" />
@@ -34,8 +48,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CMCameraInputFix.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CMInputFix.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/CinemachineInputProvider.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Character/IndependentBodyRotation.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/Movement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/TestMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/ThirdPersonMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/MovementComponent.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/EntityCore.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Character/TestMove.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1oSSVf35FD1rDjDn6MJOCNU2x5d" />
@@ -86,6 +105,9 @@
       <workItem from="1613278532441" duration="16367000" />
       <workItem from="1613342480446" duration="74000" />
       <workItem from="1613342557835" duration="10938000" />
+      <workItem from="1613362979808" duration="5444000" />
+      <workItem from="1613370050951" duration="3000" />
+      <workItem from="1613441593364" duration="19875000" />
     </task>
     <servers />
   </component>

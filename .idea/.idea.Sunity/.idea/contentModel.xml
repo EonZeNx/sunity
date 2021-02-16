@@ -102,8 +102,10 @@
             <e p="CinemachineInputProvider.cs" t="Include" />
           </e>
           <e p="Character" t="Include">
+            <e p="EntityCore.cs" t="Include" />
             <e p="IndependentBodyRotation.cs" t="Include" />
-            <e p="Movement.cs" t="Include" />
+            <e p="MovementComponent.cs" t="Include" />
+            <e p="TestMove.cs" t="Include" />
             <e p="ThirdPersonMovement.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />

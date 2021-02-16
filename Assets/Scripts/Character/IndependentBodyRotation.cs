@@ -43,6 +43,7 @@ public class IndependentBodyRotation : MonoBehaviour
         if (isAiming)
         {
             wasAiming = true;
+            timeSinceLastAim = 0f;
         }
     }
 
