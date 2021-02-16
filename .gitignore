@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # Rider files
 .idea/
+.idea/**
+.idea/.idea.Sunity/.idea/
