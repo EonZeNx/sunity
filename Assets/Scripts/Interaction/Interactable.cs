@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
 {
     public string DisplayName;
     
-    public virtual void Interact(CharacterInventory characterInventory)
+    public virtual void Interact(CharacterInventoryAndInteraction characterInventory)
     {
         return;
     }

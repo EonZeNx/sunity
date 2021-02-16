@@ -9,7 +9,7 @@ public class ItemInteractable : Interactable
 
     public ItemInteractable(): base() { }
 
-    public override void Interact(CharacterInventory characterInventory)
+    public override void Interact(CharacterInventoryAndInteraction characterInventory)
     {
         var overflow = characterInventory.PickupItemStack(new ItemStack(ItemId, Quantity));
         if (overflow.IsEmpty())

@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// CharacterInventoryBehaviour handles interfacing with player inventory, and player inventory/item interaction.
+/// CharacterInventoryAndInteraction handles:
+/// - Item interaction and inventory
+/// - World interaction
 /// </summary>
-public class CharacterInventory : MonoBehaviour
+public class CharacterInventoryAndInteraction : MonoBehaviour
 {
+    #region Constructor and Variables
+
     [Header("References")]
     public readonly Inventory MainInventory;
     public readonly Inventory HotbarInventory;
@@ -18,13 +22,17 @@ public class CharacterInventory : MonoBehaviour
     public float InteractionDistance = 20.0f;
     public Interactable InteractableInRange;
 
-    public CharacterInventory(): base()
+    public CharacterInventoryAndInteraction(): base()
     {
         MainInventory = new Inventory(4, 10);
         HotbarInventory = new Inventory(1, 10);
         MouseSlot = new ItemStack(GameManager.NULL_ITEM_ID, 0);
     }
-    
+
+    #endregion
+
+    #region Unity Lifecycle Methods
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +42,10 @@ public class CharacterInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Interaction
         if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
         {
+            // TODO: Seperate raycast from object detection.
             RaycastHit hit;
             var lookDirection = MainCamera.transform.forward.normalized;
             // Does the ray intersect any objects excluding the player layer
@@ -70,13 +80,25 @@ public class CharacterInventory : MonoBehaviour
         }
     }
 
+    #endregion
+
     #region Input Events
 
+    /// <summary>
+    /// Player presses Inventory key. 
+    /// Opens inventory.
+    /// </summary>
+    /// <param name="input"></param>
     public void OnInventory(InputValue input)
     {
         InventoryUI.Instance.ToggleInventory();
     }
-
+    
+    /// <summary>
+    /// Player presses Primary Action key.
+    /// Performs primary action on selected hotbar item.
+    /// </summary>
+    /// <param name="input"></param>
     public void OnPrimaryAction(InputValue input)
     {
         if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
@@ -90,6 +112,11 @@ public class CharacterInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Player presses Secondary Action key.
+    /// Performs secondary action on selected hotbar item.
+    /// </summary>
+    /// <param name="input"></param>
     public void OnSecondaryAction(InputValue input)
     {
         if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
@@ -103,6 +130,11 @@ public class CharacterInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Player presses Interact key.
+    /// Interacts with interactable in the world.
+    /// </summary>
+    /// <param name="input"></param>
     public void OnInteract(InputValue input)
     {
         if(InteractableInRange != null)
@@ -112,6 +144,7 @@ public class CharacterInventory : MonoBehaviour
     }
 
     /// <summary>
+    /// Player scrolls with HotbarScroll input.
     /// Toggle selected item in hotbar.
     /// </summary>
     /// <param name="scroll"></param>
@@ -130,10 +163,20 @@ public class CharacterInventory : MonoBehaviour
 
     #endregion
 
+    #region Inventory Manipulation
+
+    /// <summary>
+    /// Insert an item stack into this character's overall inventory.
+    /// Hotbar takes priority, then Main Inventory.
+    /// </summary>
+    /// <param name="stack"></param>
+    /// <returns></returns>
     public ItemStack PickupItemStack(ItemStack stack)
     {
         var overflow = HotbarInventory.InsertItemStackIntoInventory(stack);
         overflow = MainInventory.InsertItemStackIntoInventory(overflow);
         return overflow;
     }
+
+    #endregion
 }

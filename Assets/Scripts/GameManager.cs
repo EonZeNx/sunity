@@ -7,6 +7,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// GameManager contains global information about game state, as well as helper methods.
+/// TODO: Perhaps seperating some functionality into different classes.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -95,16 +99,20 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Local Player Details
+
     public GameObject GetLocalPlayer()
     {
         return GameObject.FindGameObjectWithTag("Player");
     }
 
-    public CharacterInventory GetLocalPlayerInventory()
+    public CharacterInventoryAndInteraction GetLocalPlayerInventory()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
-        return player.GetComponent<CharacterInventory>();
+        return player.GetComponent<CharacterInventoryAndInteraction>();
     }
+
+    #endregion
 
     #region GameManager Lifecycle Methods
 

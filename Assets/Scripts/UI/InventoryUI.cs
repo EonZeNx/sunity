@@ -45,7 +45,7 @@ public class InventoryUI : MonoBehaviour
     [Tooltip("This should only be on if you want to dynamically change UI positioning through the editor. Otherwise, leave this off for performance.")]
     public bool ShouldUpdateSlotPositions = false;
 
-    private CharacterInventory CharacterInventory;
+    private CharacterInventoryAndInteraction CharacterInventory;
     private IList<InventorySlotUI> MainInventorySlots;
     private IList<InventorySlotUI> HotbarInventorySlots;
     private MouseSlotUI MouseInventorySlot;
