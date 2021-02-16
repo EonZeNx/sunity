@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Inventory UI is an inventory consisting of multiple inventory slots that can be interacted with by clicking.
+/// </summary>
 public class InventoryUI : MonoBehaviour
 {
     #region Singleton

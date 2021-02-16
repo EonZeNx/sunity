@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// HotbarInventoryUI represents a UI component for a hotbar inventory. 
+/// A hotbar inventory is a collection of inventory slots which can be scrolled through.
+/// </summary>
 public class HotbarInventoryUI : MonoBehaviour
 {
     [Header("References")]

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// InventorySlotUI is a single inventory slot. Can be clicked, which will perform inventory stack manipulation.
+/// </summary>
 public class InventorySlotUI : SlotUI, IPointerClickHandler
 {
     #region Fields and Constructor

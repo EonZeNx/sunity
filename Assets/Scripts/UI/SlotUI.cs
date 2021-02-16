@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// This is an inventory UI slot. Should be extended to provide more extensive functionality.
+/// </summary>
 public class SlotUI : MonoBehaviour
 {
     #region Fields and Constructor

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// An inventory slot's UI component, but it cannot be interacted with. This will follow the mouse.
+/// </summary>
 public class MouseSlotUI: SlotUI
 {
     [Header("Mouse Position Offset")]
