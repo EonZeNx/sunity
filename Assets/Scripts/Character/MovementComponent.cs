@@ -1,344 +1,417 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 namespace Character
 {
-	#region Structs
-	public struct GlobalMovementStruct
-	{
-		// Gravity force per delta time
-		public float Gravity { get; set; }
-
-		// Reverse of gravity direction. This ensures consistence when dealing with other aspects of Unity
-		public Vector3 ReverseGravityDirection { get; set; }
-
-		// Whether or not to rotate the character to the current gravity
-		public bool RotateCharacterToGravity { get; set; }
-
-		// Maximum speed when launching or falling
-		public float TerminalVelocity { get; set; }
-
-		public GlobalMovementStruct(Vector3 reverseGravityDirection, float terminalVelocity, float gravity = -9.81f, 
-			bool rotateCharacterToGravity = false)
-		{
-			Gravity = gravity;
-			ReverseGravityDirection = reverseGravityDirection;
-			RotateCharacterToGravity = rotateCharacterToGravity;
-			TerminalVelocity = terminalVelocity;
-		}
-	}
-
-	public struct BasicMovementStruct
-	{
-		// How much control when changing directions
-		public float GroundFriction { get; set; }
-
-		// Maximum speed while moving
-		public float MaxSpeed { get; set; }
-
-		// Maximum acceleration while moving
-		public float MaxAcceleration { get; set; }
-
-		// Maximum deceleration while moving
-		public float MaxBrakingDeceleration { get; set; }
-
-		// Friction applied when acceleration == 0 or exceeding max speed
-		public float BrakingFriction { get; set; }
-
-		// Optional friction factor when calculating actual friction
-		public float BrakingFrictionFactor { get; set; }
-
-		public BasicMovementStruct(float groundFriction, float maxSpeed, float maxAcceleration, 
-			float maxBrakingDeceleration, float brakingFriction, float brakingFrictionFactor)
-		{
-			GroundFriction = groundFriction;
-			MaxSpeed = maxSpeed;
-			MaxAcceleration = maxAcceleration;
-			MaxBrakingDeceleration = maxBrakingDeceleration;
-			BrakingFriction = brakingFriction;
-			BrakingFrictionFactor = brakingFrictionFactor;
-		}
-	}
-
-	public struct AirMovementStruct
-	{
-		public float Control { get; set; }
-		public float ControlBoostMultiplier { get; set; }
-		public float ControlBoostVelocityThreshold { get; set; }
-
-		public AirMovementStruct(float control, float controlBoostMultiplier, float controlBoostVelocityThreshold)
-		{
-			Control = control;
-			ControlBoostMultiplier = controlBoostMultiplier;
-			ControlBoostVelocityThreshold = controlBoostVelocityThreshold;
-		}
-	}
-	
-	public struct JumpMovementStruct
-	{
-		public float Force { get; set; }
-		public int MaxNumberOfJumps { get; set; }
-
-		public JumpMovementStruct(float force, int maxNumberOfJumps)
-		{
-			Force = force;
-			MaxNumberOfJumps = maxNumberOfJumps;
-		}
-	}
-	#endregion
-
-	#region Enums
-	public enum MovementModeEnum
-	{
-		Grounded,
-		Falling
-	}
-
-	public enum GaitEnum
-	{
-		Walk,
-		Run
-	}
-
-	public enum StanceEnum
-	{
-		Crouched,
-		Standing
-	}
-	#endregion
-
-	public class MovementComponent : MonoBehaviour
-	{
-		#region Variables
-		[Header("External References")]
-		public CharacterController controller;
-		public Transform cam;
-		public Transform groundCheckPosition;
-		
-		[Header("Ground Check Variables")]
-		public float groundCheckRadius;
-		public LayerMask groundCollisionMask;
-		
-		protected GlobalMovementStruct GlobalMovement { get; }
-		protected BasicMovementStruct BasicMovement { get; }
-		protected AirMovementStruct AirMovement { get; }
-		protected JumpMovementStruct JumpMovement { get; set; }
-
-		protected MovementModeEnum MovementMode { get; set; }
-		protected GaitEnum Gait { get; }
-		protected StanceEnum Stance { get; }
-
-		protected int CurrentNumberOfJumps { get; set; }
-		protected Vector3 Acceleration { get; set; }
-		protected Vector3 OldVelocity { get; set; }
-		protected Vector3 Velocity { get; set; }
-		protected Vector3 NewVelocity { get; set; }
-		protected Vector3 GravityVec { get; set; }
-		protected List<Vector3> PendingLaunches { get; set; }
-		protected Vector3 LastMoveInput;
-		#endregion
-
-		// Constructor
-		public MovementComponent()
-		{
-			GlobalMovement = new GlobalMovementStruct(Vector3.up, 20f, -9.81f, false);
-			BasicMovement = new BasicMovementStruct(8f, 600f, 2048f, 2048f, 2048f, 1.5f);
-			AirMovement = new AirMovementStruct(0.05f, 2f, 25f);
-			JumpMovement = new JumpMovementStruct(20f, 2);
-
-			MovementMode = MovementModeEnum.Falling;
-			Gait = GaitEnum.Walk;
-			Stance = StanceEnum.Standing;
-
-			PendingLaunches = new List<Vector3>();
-			CurrentNumberOfJumps = JumpMovement.MaxNumberOfJumps;
-			groundCheckRadius = 0.4f;
-
-			LastMoveInput = Vector3.zero;
-		}
-
-        #region Utils
-        public void AddLaunch(Vector3 launch, bool isAcceleration = false)
+    public class MovementComponent : MonoBehaviour
+    {
+        #region Structs
+        [System.Serializable]
+        public struct GlobalMovementStruct
         {
-	        if (isAcceleration)
-	        {
-		        PendingLaunches.Add(launch * (Time.deltaTime * Time.deltaTime));
-		        return;
-	        }
-	        PendingLaunches.Add(launch);
+            // Gravity force per delta time
+            public float gravity;
+
+            // Reverse of gravity direction. This ensures consistence when dealing with other aspects of Unity
+            public Vector3 entityUp;
+            
+            // Maximum speed when launching or falling
+            public float terminalVelocity;
+
+            // Whether or not to rotate the character to the current gravity
+            public bool rotEntityToEntityUp;
+
+            public GlobalMovementStruct(Vector3 entityUp, float gravity = -9.81f, float terminalVelocity = 150f,  
+                bool rotEntityToEntityUp = false)
+            {
+                this.gravity = gravity;
+                this.entityUp = entityUp;
+                this.terminalVelocity = terminalVelocity;
+                this.rotEntityToEntityUp = rotEntityToEntityUp;
+            }
         }
         
-        public bool IsExceedingMaxSpeed(float maxSpeed)
+        [System.Serializable]
+        public struct BasicMovementStruct
         {
-	        maxSpeed = Mathf.Max(0f, maxSpeed);
+            // How much control when changing directions
+            public float groundFriction;
 
-			// Error tolerance
-			float ErrorTolerancePercent = 1.01f;
-			return Velocity.sqrMagnitude > maxSpeed * maxSpeed * ErrorTolerancePercent;
-		}
-        public bool IsGrounded()
-        {
-	        return MovementMode == MovementModeEnum.Grounded;
+            // Maximum speed while moving
+            public float maxSpeed;
+
+            // Maximum acceleration while moving
+            public float acceleration;
+
+            // Maximum deceleration while moving
+            public float brakingDeceleration;
+
+            // Friction applied when acceleration == 0 or exceeding max speed
+            public float brakingFriction;
+
+            // Optional friction factor when calculating actual friction
+            public float brakingFrictionFactor;
+
+            public BasicMovementStruct(float groundFriction = 8f, float maxSpeed = 10f, float acceleration = 5f, 
+                float brakingDeceleration = 7f, float brakingFriction = 8f, float brakingFrictionFactor = 1f)
+            {
+                this.groundFriction = groundFriction;
+                this.maxSpeed = maxSpeed;
+                this.acceleration = acceleration;
+                this.brakingDeceleration = brakingDeceleration;
+                this.brakingFriction = brakingFriction;
+                this.brakingFrictionFactor = brakingFrictionFactor;
+            }
         }
-        public bool IsFalling()
+        
+        [System.Serializable]
+        public struct JumpMovementStruct
         {
-	        return MovementMode == MovementModeEnum.Falling;
+            // Jump force to apply.
+            public float force;
+            
+            // Maximum number of jumps the entity can perform.
+            public int maxNumberOfJumps;
+
+            public JumpMovementStruct(float force = 10f, int maxNumberOfJumps = 2)
+            {
+                this.force = force;
+                this.maxNumberOfJumps = maxNumberOfJumps;
+            }
         }
-		#endregion
-		
-		#region Events/Messages
-		public void OnReceiveMoveInput(Vector3 lastMoveInput)
-		{
-			LastMoveInput = lastMoveInput;
-		}
-		
-		public void OnReceiveJumpInput()
-		{
-			Debug.Log("OnJump");
-			NewVelocity += JumpMovement.Force * GlobalMovement.ReverseGravityDirection;
-			// if (CurrentNumberOfJumps > 0)
-			// {
-			// 	Velocity += JumpMovement.Force * GlobalMovement.ReverseGravityDirection;
-			// 	CurrentNumberOfJumps -= 1;
-			// }
-		}
-
-		public void OnLanded()
-		{
-			Debug.Log("OnLanded");
-			CurrentNumberOfJumps = JumpMovement.MaxNumberOfJumps;
-		}
-
-		public void OnMovementModeUpdate(MovementModeEnum oldMode)
-		{
-			Debug.Log($"Updated MovementMode from {oldMode} to {MovementMode}");
-		}
-		#endregion
-		
-		private bool GroundCheck()
-		{
-			return Physics.CheckSphere(groundCheckPosition.position, groundCheckRadius, groundCollisionMask);
-		}
-		public void CalcMovementMode()
-		{
-			MovementModeEnum newMovementMode = GroundCheck() ? MovementModeEnum.Grounded : MovementModeEnum.Falling;
-			if (newMovementMode == MovementMode)
-			{
-				return;
-			}
-			if (MovementMode != MovementModeEnum.Grounded && newMovementMode == MovementModeEnum.Grounded)
-			{
-				BroadcastMessage("OnLanded");
-			}
-			MovementMode = newMovementMode;
-			
-			// if (newMovementMode != MovementMode) { BroadcastMessage("OnMovementModeUpdate", oldMovementMode); }
-		}
-		public void ApplyPendingLaunches()
+        #endregion
+        
+        #region Enums
+        public enum MovementModeEnum
         {
-			OldVelocity = Velocity;
-			Vector3 deltaVelocity = Vector3.zero;
-			foreach (var pendingLaunch in PendingLaunches)
-			{
-				deltaVelocity += pendingLaunch;
-			}
-			PendingLaunches.Clear();
+            Grounded,
+            Falling
+        }
+        public enum GaitEnum
+        {
+            Walk,
+            Run
+        }
+        public enum StanceEnum
+        {
+            Crouched,
+            Standing
+        }
+        #endregion
 
-			Velocity = deltaVelocity;
-			Velocity = Velocity.magnitude > GlobalMovement.TerminalVelocity 
-				? Velocity.normalized * GlobalMovement.TerminalVelocity
-				: Velocity;
+        #region Variables
+        [Header("External References")]
+        public CharacterController controller;
+        public Transform aimLocation;
+        public Transform groundCheck;
+
+        [Header("Movement Structs")]
+        public GlobalMovementStruct globalSettings;
+        public BasicMovementStruct basicSettings;
+        public JumpMovementStruct jumpSettings;
+
+        [Header("Movement Enums")]
+        public MovementModeEnum movementMode;
+
+        [Header("Inputs")]
+        public Vector3 lastMoveInput;
+
+        [Header("Jump")]
+        public int currentJumps;
+        public bool pendingJump;
+
+        [Header("Forces")]
+        public Vector3 oldVelocity;
+        public Vector3 velocity;
+        public Vector3 oldAcceleration;
+        public Vector3 acceleration;
+        
+        [Header("Ground Check")]
+        public float groundCheckRadius;
+        public LayerMask groundCollisionMask;
+
+        public bool isGrounded
+        {
+            get
+            {
+                return movementMode == MovementModeEnum.Grounded;
+            }
+        }
+        public bool isFalling
+        {
+            get
+            {
+                return movementMode == MovementModeEnum.Falling;
+            }
         }
 
-		#region Velocity
-		public void ApplyBrakingVelocity(float dt, float friction, float brakingDeceleration)
+        #region Readonly
+        private float _vertForces;
+        private Vector3 _horiForces;
+        #endregion
+        
+        #endregion
+
+        // Constructor
+        public MovementComponent()
         {
-			float frictionFactor = Mathf.Max(0f, BasicMovement.BrakingFrictionFactor);
-			friction = Mathf.Max(0f, friction * frictionFactor);
+            // Movement Structs
+            globalSettings = new GlobalMovementStruct(Vector3.up);
+            basicSettings = new BasicMovementStruct();
+            jumpSettings = new JumpMovementStruct(maxNumberOfJumps:-1);
 
-			bool hasZeroFriction = friction == 0f;
-			bool hasZeroBraking = brakingDeceleration == 0f;
-			if (hasZeroFriction && hasZeroBraking) { return; }
+            // Movement Enums
+            movementMode = MovementModeEnum.Falling;
 
-			Vector3 oldVelocity = Velocity;
-			Vector3 revAccel = hasZeroBraking ? Vector3.zero : (-brakingDeceleration * Velocity.normalized);
-			Velocity += (-friction * Velocity + revAccel) * dt;
-
-			if (Vector3.Dot(Velocity, oldVelocity) <= 0f) { Velocity = Vector3.zero; }
-		}
-
-		public void CalcVelocityGrounded(float dt)
-		{
-			Vector3 oldVelocity = Velocity;
-
-			float friction = Mathf.Max(0f, BasicMovement.GroundFriction);
-			float maxSpeed = BasicMovement.MaxSpeed;
-
-			bool hasZeroAcceleration = Acceleration.magnitude <= 0.01f;
-			bool velocityOverMax = IsExceedingMaxSpeed(maxSpeed);
-
-			if (hasZeroAcceleration || velocityOverMax)
-			{
-				ApplyBrakingVelocity(dt, friction, BasicMovement.MaxBrakingDeceleration);
-
-				if (velocityOverMax && Velocity.sqrMagnitude < (maxSpeed * maxSpeed) && Vector3.Dot(Acceleration, oldVelocity) > 0.0f)
-				{
-					Velocity = oldVelocity.normalized * maxSpeed;
-				}
-			}
-		}
-
-		public void CalcVelocity(float dt)
-        {
-			switch (MovementMode)
-			{
-				case MovementModeEnum.Grounded:
-					CalcVelocityGrounded(dt);
-					break;
-				/*case MovementModeEnum.Falling:
-					CalcVelocityFalling(dt);
-					break;*/
-				default:
-					CalcVelocityGrounded(dt);
-					break;
-			}
-		}
-
-		public void CalcAcceleration()
-        {
-			Acceleration = Velocity - OldVelocity;
+            // Jump
+            // currentJumps = JumpMovement.MaxNumberOfJumps;
+            currentJumps = -1;
+            pendingJump = false;
+            
+            // Forces
+            oldVelocity = Vector3.zero;
+            velocity = Vector3.zero;
+            oldAcceleration = Vector3.zero;
+            acceleration = Vector3.zero;
+            
+            // Ground Check
+            groundCheckRadius = 0.4f;
+            
+            // Read only
+            _vertForces = 0f;
+            _horiForces = Vector3.zero;
         }
-		#endregion
-		
-		private void CalcGravity()
-		{
-			if (IsGrounded())
-			{
-				GravityVec = -2f * GlobalMovement.ReverseGravityDirection;
-			}
-			else
-			{
-				GravityVec += GlobalMovement.ReverseGravityDirection * (GlobalMovement.Gravity);
-			}
-			controller.Move(GravityVec * (Time.deltaTime * Time.deltaTime));
-		}
+        
+        #region Utils
+        
+        /// <summary>
+        /// Keep track of current and old values.
+        /// May be useful for later such as different animations due to changes in acceleration.
+        /// </summary>
+        private void UpdateReadForces()
+        {
+            oldVelocity = velocity;
+            velocity = controller.velocity;
+            
+            oldAcceleration = acceleration;
+            acceleration = Vector3.zero;
+        }
+        
+        /// <summary>
+        /// Check if the entity is on the ground. Broadcasts a message if isGrounded is updated.
+        /// </summary>
+        private void GroundCheck()
+        {
+            bool newIsGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundCollisionMask);
+            
+            // If new state is different, Broadcast a message.
+            if (newIsGrounded != isGrounded)
+            {
+                if (newIsGrounded)
+                {
+                    BroadcastMessage("OnLanded");
+                }
+                else {
+                    BroadcastMessage("OnFalling");
+                }
+            }
+        }
+        
+        #endregion
 
-		public void Update()
-		{
-	        CalcGravity();
-	        if (GroundCheck())
-	        {
-		        MovementMode = MovementModeEnum.Grounded;
-	        }
-	        
-	        controller.Move(NewVelocity * Time.deltaTime);
-	        OldVelocity = Velocity;
-	        Velocity = NewVelocity;
-	        NewVelocity = Vector3.zero;
-		}
-	}
+        #region Messages
+        
+        private void OnLanded()
+        {
+            movementMode = MovementModeEnum.Grounded;
+            _vertForces = globalSettings.gravity;
+            if (currentJumps != -1)
+            {
+                currentJumps = jumpSettings.maxNumberOfJumps;
+            }
+        }
+        private void OnFalling()
+        {
+            movementMode = MovementModeEnum.Falling;
+        }
+        private void OnJumpInput()
+        {
+            if (currentJumps > 0)
+            {
+                pendingJump = true;
+                currentJumps -= 1;
+            }
+
+            if (currentJumps == -1 && jumpSettings.maxNumberOfJumps == -1)
+            {
+                pendingJump = true;
+            }
+            else
+            {
+                currentJumps = 0;
+                jumpSettings = new JumpMovementStruct();
+            }
+        }
+        private void OnMoveInput(Vector3 moveInput)
+        {
+            lastMoveInput = moveInput;
+        }
+        
+        #endregion
+
+        #region Movement Calculations
+
+        #region Grounded HForces
+
+        /// <summary>
+        /// Calculates the grounded braking horizontal forces for the entity.
+        /// </summary>
+        /// <param name="isExceedingMaxSpeed">Whether or not the entity was exceeding their maximum speed.</param>
+        private void CalcGroundBrakingHForces(bool isExceedingMaxSpeed)
+        {
+            // Calculate the braking friction.
+            Vector3 brakingDirection = -_horiForces.normalized;
+            Vector3 newHoriForces = _horiForces + ((-basicSettings.brakingFriction) * _horiForces + brakingDirection) * Time.deltaTime;
+
+            // If was above max speed and braking forced them lower than max speed, adjust.
+            if (isExceedingMaxSpeed && newHoriForces.sqrMagnitude > basicSettings.maxSpeed * basicSettings.maxSpeed)
+            {
+                newHoriForces = newHoriForces.normalized * basicSettings.maxSpeed;
+            }
+
+            // If braking forced a reverse change in direction, set to zero.
+            if (Vector3.Dot(newHoriForces, _horiForces) < 0)
+            {
+                newHoriForces = Vector3.zero;
+            }
+            _horiForces = newHoriForces;
+        }
+
+        /// <summary>
+        /// Lateral movement input for grounded entities.
+        /// </summary>
+        private void CalcGroundedInputForces()
+        {
+            // Lateral movement calc
+            // x then z due to Unity's different coord layout
+            float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
+            Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
+
+            // Direction change consideration
+            float velocitySize = (_horiForces + moveDirection).magnitude;
+            Vector3 inputDirection = _horiForces - ((_horiForces - moveDirection * velocitySize) *
+                                                    Mathf.Min(Time.deltaTime * basicSettings.groundFriction, 1f));
+            Vector3 inputAcceleration = inputDirection * basicSettings.acceleration;
+
+            // Check if new horizontal acceleration is exceeding the speed limit and adjust if so.
+            Vector3 newHoriForces = inputAcceleration;
+            if (newHoriForces.sqrMagnitude > basicSettings.maxSpeed * basicSettings.maxSpeed)
+            {
+                newHoriForces = newHoriForces.normalized * basicSettings.maxSpeed;
+            }
+            _horiForces = newHoriForces;
+        }
+
+        /// <summary>
+        /// Calculate horizontal forces for the entity while on the ground.
+        /// </summary>
+        private void CalcGroundedHForces()
+        {
+            // Brake/resist current movement if either exceeding maximum speed, have no acceleration, or input is too small to register.
+            bool isExceedingMaxSpeed = _horiForces.sqrMagnitude > basicSettings.maxSpeed * basicSettings.maxSpeed;
+            bool zeroAcceleration = lastMoveInput.sqrMagnitude < 0.1f;
+            
+            // Only decelerate if exceeding max speed or have no input.
+            if (isExceedingMaxSpeed || zeroAcceleration)
+            {
+                CalcGroundBrakingHForces(isExceedingMaxSpeed);
+            }
+
+            if (!zeroAcceleration)
+            {
+                CalcGroundedInputForces();
+            }
+        }
+        
+        #endregion
+
+        #region Falling HForces
+
+        /// <summary>
+        /// Calculate the horizontal forces for the entity while falling.
+        /// </summary>
+        private void CalcFallingHForces()
+        {
+            // TODO: Figure CalcFallingHForces out.
+            return;
+        }
+        #endregion
+        
+        /// <summary>
+        /// Calls the appropriate CalcHForces function for the current movement state.
+        /// </summary>
+        private void CalcHorizontalForces()
+        {
+            switch (movementMode)
+            {
+                case MovementModeEnum.Grounded:
+                    CalcGroundedHForces();
+                    break;
+                case MovementModeEnum.Falling:
+                    CalcFallingHForces();
+                    break;
+                default:
+                    CalcGroundedHForces();
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// Calculates the vertical forces applied to this entity.
+        /// </summary>
+        private void CalcVerticalForces()
+        {
+            if (!isGrounded)
+            {
+                _vertForces += globalSettings.gravity * Time.deltaTime;
+            }
+            
+            // If pending a jump, override the vertical force to give a proper jump.
+            if (pendingJump)
+            {
+                _vertForces = jumpSettings.force;
+                pendingJump = false;
+            }
+        }
+
+        /// <summary>
+        /// Calls all other movement calculation functions then finally applies them.
+        /// </summary>
+        private void CalcMovement()
+        {
+            CalcHorizontalForces();
+            CalcVerticalForces();
+
+            acceleration = _horiForces;
+            acceleration += globalSettings.entityUp * _vertForces;
+            controller.Move(acceleration * Time.deltaTime);
+        }
+        
+        #endregion
+
+        /// <summary>
+        /// Called every frame.
+        /// </summary>
+        void Update()
+        {
+            GroundCheck();
+            CalcMovement();
+            
+            UpdateReadForces();
+        }
+    }
 }
+
