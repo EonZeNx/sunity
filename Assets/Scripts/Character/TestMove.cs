@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TestMove : MonoBehaviour
 {
     #region Structs
+    [System.Serializable]
     public struct GlobalMovementStruct
     {
         // Gravity force per delta time
@@ -29,6 +31,8 @@ public class TestMove : MonoBehaviour
             TerminalVelocity = terminalVelocity;
         }
     }
+    
+    [System.Serializable]
     public struct BasicMovementStruct
     {
         // How much control when changing directions
@@ -60,6 +64,8 @@ public class TestMove : MonoBehaviour
             BrakingFrictionFactor = brakingFrictionFactor;
         }
     }
+    
+    [System.Serializable]
     public struct JumpMovementStruct
     {
         public float Force;
@@ -124,7 +130,8 @@ public class TestMove : MonoBehaviour
     public bool isGrounded;
     
     #region Readonly
-    private float _totalGravity;
+    private float _vertForces;
+    private Vector3 _horiForces;
     #endregion
     
     #endregion
@@ -138,7 +145,8 @@ public class TestMove : MonoBehaviour
 
         MovementMode = MovementModeEnum.Falling;
 
-        currentJumps = JumpMovement.MaxNumberOfJumps;
+        // currentJumps = JumpMovement.MaxNumberOfJumps;
+        currentJumps = -1;
         pendingJump = false;
         
         oldVelocity = Vector3.zero;
@@ -175,7 +183,11 @@ public class TestMove : MonoBehaviour
     private void OnLanded()
     {
         isGrounded = true;
-        currentJumps = JumpMovement.MaxNumberOfJumps;
+        _vertForces = GlobalMovement.Gravity;
+        if (currentJumps != -1)
+        {
+            currentJumps = JumpMovement.MaxNumberOfJumps;
+        }
     }
     private void OnFalling()
     {
@@ -183,12 +195,13 @@ public class TestMove : MonoBehaviour
     }
     private void OnJumpInput()
     {
-        if (currentJumps > 0)
+        if (currentJumps > 0 || currentJumps == -1)
         {
             pendingJump = true;
-            Vector3 jumpVec = GlobalMovement.ReverseGravityDirection * JumpMovement.Force;
-            newVelocity += jumpVec;
-            currentJumps -= 1;
+            if (currentJumps > 0)
+            {
+                currentJumps -= 1;
+            }
         }
     }
     private void OnMoveInput(Vector3 moveInput)
@@ -212,40 +225,50 @@ public class TestMove : MonoBehaviour
         }
     }
     
-    private void CalcGravity()
+    private void CalcHorizontalForces()
     {
+        // Do not move horizontally unless last move input was valid
+        _horiForces = Vector3.zero;
+        if (lastMoveInput.sqrMagnitude > 0.01f)
+        {
+            // Lateral movement calc
+            // x then z due to Unity's different coord layout
+            float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
+            Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
+            _horiForces = BasicMovement.Acceleration * moveDirection.normalized;
+        }
+        else
+        {
+            // TODO: Braking friction
+        }
+    }
+    
+    private void CalcVerticalForces()
+    {
+        if (!isGrounded)
+        {
+            _vertForces += GlobalMovement.Gravity * Time.deltaTime;
+        }
         if (pendingJump)
         {
-            _totalGravity = JumpMovement.Force;
+            _vertForces = JumpMovement.Force;
             pendingJump = false;
         }
-        else {
-            if (isGrounded)
-            {
-                _totalGravity = -2f;
-            }
-            _totalGravity += GlobalMovement.Gravity * Time.deltaTime;
-        }
-        controller.Move(GlobalMovement.ReverseGravityDirection * (_totalGravity * Time.deltaTime));
     }
 
     private void Movement()
     {
-        if (lastMoveInput.magnitude < 0.1f) { return; }
-        
-        // // x then z due to Unity's different coord layout
-        float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
-        Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
+        CalcHorizontalForces();
+        CalcVerticalForces();
 
-        Vector3 basicMovement = BasicMovement.Acceleration * Time.deltaTime * moveDirection.normalized;
-        controller.Move(basicMovement);
-        newVelocity += basicMovement;
+        acceleration = _horiForces;
+        acceleration.y = _vertForces;
+        controller.Move(acceleration * Time.deltaTime);
     }
     
     void Update()
     {
         GroundCheck();
-        CalcGravity();
         Movement();
         
         UpdateVelocities();
