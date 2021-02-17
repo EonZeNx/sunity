@@ -36,7 +36,7 @@ public class IndependentBodyRotation : MonoBehaviour
     private float _smoothVelUpperBody;
     private float _smoothVelLowerBody;
     
-    public void OnAim(InputValue value)
+    public void OnAimInput(InputValue value)
     {
         // Follow camera
         isAiming = value.Get<float>() > 0.5;

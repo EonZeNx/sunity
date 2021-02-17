@@ -31,6 +31,11 @@ public class EntityCore : MonoBehaviour
     {
         BroadcastMessage("OnJumpInput");
     }
+    
+    public void OnSecondaryAction(InputValue value)
+    {
+        BroadcastMessage("OnAimInput", value);
+    }
     #endregion
 
     // Update is called once per frame

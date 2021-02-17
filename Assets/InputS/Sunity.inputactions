@@ -39,7 +39,7 @@
                 },
                 {
                     "name": "SecondaryAction",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "1436ec9a-d7b7-49fa-a95f-abd5c93f6364",
                     "expectedControlType": "Button",
                     "processors": "",
