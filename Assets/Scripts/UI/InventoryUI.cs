@@ -59,7 +59,7 @@ public class InventoryUI : MonoBehaviour
         MainInventorySlots = new List<InventorySlotUI>();
         HotbarInventorySlots = new List<InventorySlotUI>();
 
-        CharacterInventory = GameManager.Instance.GetLocalPlayerInventory();
+        CharacterInventory = PlayerManager.Instance.LocalPlayerInventory;
         var mainInventory = CharacterInventory.MainInventory;
         var hotbarInventory = CharacterInventory.HotbarInventory;
         var mouseStack = CharacterInventory.MouseSlot;

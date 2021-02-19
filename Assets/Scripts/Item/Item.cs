@@ -7,6 +7,7 @@ using System.Linq;
 /// Item represents the definition of an item. This is where properties such as item name, item description, and item max stack size are found.
 /// This class can be extended to provide items with differing functionality, i.e. consumables, tools.
 /// </summary>
+[System.Serializable]
 public class Item
 {
     #region Fields and Constructor

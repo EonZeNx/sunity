@@ -1,3 +1,4 @@
+using MLAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class ThirdPersonMovement : NetworkedBehaviour
 {
     // TODO: Figure out Unity and/or C# comment system and describe wtf is going on here
     // TODO: Implement update/fix for Cinemachine for good 3PC

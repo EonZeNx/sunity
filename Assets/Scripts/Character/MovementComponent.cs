@@ -1,3 +1,4 @@
+using MLAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class MovementComponent : MonoBehaviour
+    public class MovementComponent : NetworkedBehaviour
     {
         #region Structs
         [System.Serializable]

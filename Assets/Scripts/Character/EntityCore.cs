@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Character;
+using MLAPI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EntityCore : MonoBehaviour
+public class EntityCore : NetworkedBehaviour
 {
     #region Variables
     [Header("External References")]

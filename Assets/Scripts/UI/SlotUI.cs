@@ -23,7 +23,7 @@ public class SlotUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ItemStack = new ItemStack(GameManager.NULL_ITEM_ID, 0);
+        ItemStack = new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0);
     }
 
     void LateUpdate()

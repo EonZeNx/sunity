@@ -1,3 +1,4 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.InputSystem;
 /// - Item interaction and inventory
 /// - World interaction
 /// </summary>
-public class CharacterInventoryAndInteraction : MonoBehaviour
+public class CharacterInventoryAndInteraction : NetworkedBehaviour
 {
     #region Constructor and Variables
 
@@ -26,7 +27,7 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
     {
         MainInventory = new Inventory(4, 10);
         HotbarInventory = new Inventory(1, 10);
-        MouseSlot = new ItemStack(GameManager.NULL_ITEM_ID, 0);
+        MouseSlot = new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0);
     }
 
     #endregion
@@ -43,7 +44,7 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
     void Update()
     {
         // Interaction
-        if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
         {
             // TODO: Seperate raycast from object detection.
             RaycastHit hit;
@@ -73,10 +74,10 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
     {
         if(InteractableInRange != null)
         {
-            GameManager.Instance.InteractionText.text = InteractableInRange.DisplayName + " [Press F to interact]";
+            InventoryAndInteractionManager.Instance.InteractionText.text = InteractableInRange.DisplayName + " [Press F to interact]";
         } else
         {
-            GameManager.Instance.InteractionText.text = "";
+            InventoryAndInteractionManager.Instance.InteractionText.text = "";
         }
     }
 
@@ -101,13 +102,13 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
     /// <param name="input"></param>
     public void OnPrimaryAction(InputValue input)
     {
-        if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
         {
-            var itemStack = GameManager.Instance.HotbarUI.GetSelectedItemStack();
+            var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUsePrimary(itemStack, this);
             if (newStack != null)
             {
-                GameManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
+                InventoryAndInteractionManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
             }
         }
     }
@@ -119,13 +120,13 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
     /// <param name="input"></param>
     public void OnSecondaryAction(InputValue input)
     {
-        if (!GameManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
         {
-            var itemStack = GameManager.Instance.HotbarUI.GetSelectedItemStack();
+            var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
             if (newStack != null)
             {
-                GameManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
+                InventoryAndInteractionManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
             }
         }
     }
@@ -153,11 +154,11 @@ public class CharacterInventoryAndInteraction : MonoBehaviour
         var scrollValue = scroll.Get<Vector2>().y;
         if (scrollValue > 20)
         {
-            GameManager.Instance.HotbarUI.NavigateToLeft();
+            InventoryAndInteractionManager.Instance.HotbarUI.NavigateToLeft();
         }
         else if (scrollValue < -20)
         {
-            GameManager.Instance.HotbarUI.NavigateToRight();
+            InventoryAndInteractionManager.Instance.HotbarUI.NavigateToRight();
         }
     }
 

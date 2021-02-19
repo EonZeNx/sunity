@@ -27,7 +27,7 @@ public class Inventory
         {
             for (int col = 0; col < Cols; col++)
             {
-                ItemSlots[row, col] = new ItemStack(GameManager.NULL_ITEM_ID, 0);
+                ItemSlots[row, col] = new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0);
             }
         }
     }

@@ -24,7 +24,7 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
-        ItemStack = new ItemStack(GameManager.NULL_ITEM_ID, 0);
+        ItemStack = new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0);
     }
 
     void Update()
@@ -71,7 +71,7 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
 
     public void PrimaryAction()
     {
-        var playerInventory = GameManager.Instance.GetLocalPlayerInventory();
+        var playerInventory = PlayerManager.Instance.LocalPlayerInventory;
 
         var resultStack = Inventory.GetItemStack(Row, Col).OnPrimaryAction(playerInventory.MouseSlot);
         playerInventory.MouseSlot.ItemId = resultStack.ItemId;
@@ -80,7 +80,7 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
 
     public void SecondaryAction()
     {
-        var playerInventory = GameManager.Instance.GetLocalPlayerInventory();
+        var playerInventory = PlayerManager.Instance.LocalPlayerInventory;
 
         var resultStack = Inventory.GetItemStack(Row, Col).OnSecondaryAction(playerInventory.MouseSlot);
         playerInventory.MouseSlot.ItemId = resultStack.ItemId;

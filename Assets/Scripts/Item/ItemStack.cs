@@ -7,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// ItemStack represents a stack of items within an inventory slot.
 /// </summary>
+[System.Serializable]
 public class ItemStack
 {
     #region Fields and Constructor
@@ -30,7 +31,7 @@ public class ItemStack
     /// <returns>Item definition object.</returns>
     public Item GetItemDefinition()
     {
-        var gameManager = GameManager.Instance;
+        var gameManager = InventoryAndInteractionManager.Instance;
         return gameManager.GetItemById(ItemId);
     }
 
@@ -49,7 +50,7 @@ public class ItemStack
     /// <returns></returns>
     public bool IsEmpty()
     {
-        return ItemId == GameManager.NULL_ITEM_ID || Quantity == 0;
+        return ItemId == InventoryAndInteractionManager.NULL_ITEM_ID || Quantity == 0;
     }
 
     #endregion
@@ -147,7 +148,7 @@ public class ItemStack
         
         if (isEmpty)
         {
-            ItemId = GameManager.NULL_ITEM_ID;
+            ItemId = InventoryAndInteractionManager.NULL_ITEM_ID;
             Quantity = 0;
         }
 

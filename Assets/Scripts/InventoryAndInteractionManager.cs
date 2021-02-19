@@ -8,17 +8,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// GameManager contains global information about game state, as well as helper methods.
-/// TODO: Perhaps seperating some functionality into different classes.
+/// InventoryAndInteractionManager contains global information about item/interaction UI elements and state, as well as helper methods.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class InventoryAndInteractionManager : MonoBehaviour
 {
     #region Singleton
 
-    private static GameManager _instance;
+    private static InventoryAndInteractionManager _instance;
 
-    public static GameManager Instance { get { return _instance; } }
-
+    public static InventoryAndInteractionManager Instance { get { return _instance; } }
 
     private void Awake()
     {
@@ -95,21 +93,6 @@ public class GameManager : MonoBehaviour
     public Item GetItemById(string id)
     {
         return ItemDefinitions.First(item => item.Id == id);
-    }
-
-    #endregion
-
-    #region Local Player Details
-
-    public GameObject GetLocalPlayer()
-    {
-        return GameObject.FindGameObjectWithTag("Player");
-    }
-
-    public CharacterInventoryAndInteraction GetLocalPlayerInventory()
-    {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        return player.GetComponent<CharacterInventoryAndInteraction>();
     }
 
     #endregion
