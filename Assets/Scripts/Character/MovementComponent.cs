@@ -259,6 +259,11 @@ namespace Character
         {
             lastMoveInput = moveInput;
         }
+        private void OnReachApexJump()
+        {
+            Debug.Log("OnReachApexJump");
+        }
+        
         
         #endregion
 
@@ -374,6 +379,7 @@ namespace Character
         /// </summary>
         private void CalcVerticalForces()
         {
+            float oldVertForces = _vertForces;
             if (!isGrounded)
             {
                 _vertForces += globalSettings.gravity * Time.deltaTime;
@@ -384,6 +390,11 @@ namespace Character
             {
                 _vertForces = jumpSettings.force;
                 pendingJump = false;
+            }
+
+            if (oldVertForces > 0 && _vertForces <= 0)
+            {
+                BroadcastMessage("OnReachApexJump");
             }
         }
 
