@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace Character
 {
@@ -82,6 +83,26 @@ namespace Character
                 this.maxNumberOfJumps = maxNumberOfJumps;
             }
         }
+
+        [System.Serializable]
+        public struct FallingMovementStruct
+        {
+            // Lateral friction
+            public float lateralFriction;
+            
+            // Lateral braking deceleration when falling
+            public float lateralBrakingDeceleration;
+            
+            // Air control as a percent of current basic movement
+            public float airControl;
+
+            public FallingMovementStruct(float lateralFriction = 8f, float lateralBrakingDeceleration = 25f, float airControl = 0.3f)
+            {
+                this.lateralFriction = lateralFriction;
+                this.lateralBrakingDeceleration = lateralBrakingDeceleration;
+                this.airControl = airControl;
+            }
+        }
         #endregion
         
         #region Enums
@@ -112,6 +133,7 @@ namespace Character
         public GlobalMovementStruct globalSettings;
         public BasicMovementStruct basicSettings;
         public JumpMovementStruct jumpSettings;
+        public FallingMovementStruct fallingSettings;
 
         [Header("Movement Enums")]
         public MovementModeEnum movementMode;
@@ -162,6 +184,7 @@ namespace Character
             globalSettings = new GlobalMovementStruct(Vector3.up);
             basicSettings = new BasicMovementStruct();
             jumpSettings = new JumpMovementStruct(maxNumberOfJumps:-1);
+            fallingSettings = new FallingMovementStruct();
 
             // Movement Enums
             movementMode = MovementModeEnum.Falling;
@@ -261,15 +284,42 @@ namespace Character
         }
         private void OnReachApexJump()
         {
-            Debug.Log("OnReachApexJump");
         }
         
         
         #endregion
 
         #region Movement Calculations
+        
+        /// <summary>
+        /// Lateral movement input for grounded entities.
+        /// </summary>
+        /// <param name="friction">Lateral friction</param>
+        /// <param name="accel">Lateral acceleration to apply</param>
+        /// <param name="maxSpeed">Maximum lateral speed limiter</param>
+        private void CalcHInputForces(float friction, float accel, float maxSpeed)
+        {
+            // Lateral movement calc
+            // x then z due to Unity's different coord layout
+            float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
+            Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
 
-        #region Grounded HForces
+            // Direction change consideration
+            float velocitySize = (_horiForces + moveDirection).magnitude;
+            Vector3 inputDirection = _horiForces - ((_horiForces - moveDirection * velocitySize) *
+                                                    Mathf.Min(Time.deltaTime * friction, 1f));
+            Vector3 inputAcceleration = inputDirection * accel;
+
+            // Check if new horizontal acceleration is exceeding the speed limit and adjust if so.
+            Vector3 newHoriForces = inputAcceleration;
+            if (newHoriForces.sqrMagnitude > maxSpeed * maxSpeed)
+            {
+                newHoriForces = newHoriForces.normalized * maxSpeed;
+            }
+            _horiForces = newHoriForces;
+        }
+
+        #region HForces
 
         /// <summary>
         /// Calculates the grounded braking horizontal forces for the entity.
@@ -296,31 +346,6 @@ namespace Character
         }
 
         /// <summary>
-        /// Lateral movement input for grounded entities.
-        /// </summary>
-        private void CalcGroundedInputForces()
-        {
-            // Lateral movement calc
-            // x then z due to Unity's different coord layout
-            float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
-            Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
-
-            // Direction change consideration
-            float velocitySize = (_horiForces + moveDirection).magnitude;
-            Vector3 inputDirection = _horiForces - ((_horiForces - moveDirection * velocitySize) *
-                                                    Mathf.Min(Time.deltaTime * basicSettings.groundFriction, 1f));
-            Vector3 inputAcceleration = inputDirection * basicSettings.acceleration;
-
-            // Check if new horizontal acceleration is exceeding the speed limit and adjust if so.
-            Vector3 newHoriForces = inputAcceleration;
-            if (newHoriForces.sqrMagnitude > basicSettings.maxSpeed * basicSettings.maxSpeed)
-            {
-                newHoriForces = newHoriForces.normalized * basicSettings.maxSpeed;
-            }
-            _horiForces = newHoriForces;
-        }
-
-        /// <summary>
         /// Calculate horizontal forces for the entity while on the ground.
         /// </summary>
         private void CalcGroundedHForces()
@@ -337,23 +362,17 @@ namespace Character
 
             if (!zeroAcceleration)
             {
-                CalcGroundedInputForces();
+                CalcHInputForces(basicSettings.groundFriction, basicSettings.acceleration, basicSettings.maxSpeed);
             }
         }
-        
-        #endregion
-
-        #region Falling HForces
 
         /// <summary>
         /// Calculate the horizontal forces for the entity while falling.
         /// </summary>
         private void CalcFallingHForces()
         {
-            // TODO: Figure CalcFallingHForces out.
-            return;
+            CalcHInputForces(fallingSettings.lateralFriction, basicSettings.acceleration * fallingSettings.airControl, basicSettings.maxSpeed);
         }
-        #endregion
         
         /// <summary>
         /// Calls the appropriate CalcHForces function for the current movement state.
@@ -374,29 +393,44 @@ namespace Character
             }
         }
         
+        #endregion
+
+        #region VForces
+
         /// <summary>
         /// Calculates the vertical forces applied to this entity.
         /// </summary>
         private void CalcVerticalForces()
         {
-            float oldVertForces = _vertForces;
+            float newVertForces = _vertForces;
             if (!isGrounded)
             {
-                _vertForces += globalSettings.gravity * Time.deltaTime;
+                newVertForces += globalSettings.gravity * Time.deltaTime;
             }
             
             // If pending a jump, override the vertical force to give a proper jump.
             if (pendingJump)
             {
-                _vertForces = jumpSettings.force;
+                newVertForces = jumpSettings.force;
                 pendingJump = false;
             }
 
-            if (oldVertForces > 0 && _vertForces <= 0)
+            // Limit falling speed to terminal velocity
+            if (Mathf.Abs(newVertForces) > globalSettings.terminalVelocity)
+            {
+                newVertForces = globalSettings.terminalVelocity;
+            }
+
+            // Send event if reached the apex of a jump/launch
+            if (_vertForces > 0 && newVertForces <= 0)
             {
                 BroadcastMessage("OnReachApexJump");
             }
+
+            _vertForces = newVertForces;
         }
+
+        #endregion
 
         /// <summary>
         /// Calls all other movement calculation functions then finally applies them.
