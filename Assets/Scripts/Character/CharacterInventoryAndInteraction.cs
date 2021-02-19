@@ -43,6 +43,11 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsLocalPlayer)
+        {
+            return;
+        }
+
         // Interaction
         if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
         {

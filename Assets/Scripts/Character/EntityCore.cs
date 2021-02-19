@@ -45,7 +45,12 @@ public class EntityCore : NetworkedBehaviour
     {
         if (!IsLocalPlayer)
         {
+            // Disable camera
             EntityCamera.SetActive(false);
+            Debug.Log($"Camera for this player {this.NetworkId} has been disabled.");
+
+            // Disable player input
+            GetComponent<PlayerInput>().enabled = false;
         }
     }
 

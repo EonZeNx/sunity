@@ -408,13 +408,15 @@ namespace Character
         /// </summary>
         void Update()
         {
-            if (IsLocalPlayer)
+            if (!IsLocalPlayer)
             {
-                GroundCheck();
-                CalcMovement();
-
-                UpdateReadForces();
+                return;
             }
+
+            GroundCheck();
+            CalcMovement();
+
+            UpdateReadForces();
         }
     }
 }

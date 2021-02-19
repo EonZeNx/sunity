@@ -154,6 +154,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
+      propertyPath: RunInBackground
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
       propertyPath: NetworkConfig.RegisteredScenes.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -208,6 +212,14 @@ PrefabInstance:
     - target: {fileID: 6943448588913833412, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943448588913833413, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
+      propertyPath: ConnectPort
+      value: 25565
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943448588913833413, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
+      propertyPath: ServerListenPort
+      value: 25565
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
