@@ -400,7 +400,7 @@ namespace Character
             acceleration += globalSettings.entityUp * _vertForces;
             controller.Move(acceleration * Time.deltaTime);
         }
-        
+
         #endregion
 
         /// <summary>
@@ -408,10 +408,13 @@ namespace Character
         /// </summary>
         void Update()
         {
-            GroundCheck();
-            CalcMovement();
-            
-            UpdateReadForces();
+            if (IsLocalPlayer)
+            {
+                GroundCheck();
+                CalcMovement();
+
+                UpdateReadForces();
+            }
         }
     }
 }

@@ -14,6 +14,8 @@ public class EntityCore : NetworkedBehaviour
     public Vector3 lastInputVec;
     #endregion
 
+    public GameObject EntityCamera;
+
     public EntityCore()
     {
     }
@@ -38,6 +40,14 @@ public class EntityCore : NetworkedBehaviour
         BroadcastMessage("OnAimInput", value);
     }
     #endregion
+
+    public override void NetworkStart()
+    {
+        if (!IsLocalPlayer)
+        {
+            EntityCamera.SetActive(false);
+        }
+    }
 
     // Update is called once per frame
     void Update()
