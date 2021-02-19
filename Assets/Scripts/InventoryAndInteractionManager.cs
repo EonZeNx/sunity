@@ -97,7 +97,7 @@ public class InventoryAndInteractionManager : MonoBehaviour
 
     #endregion
 
-    #region GameManager Lifecycle Methods
+    #region Lifecycle Methods
 
     void Start()
     {
