@@ -1,5 +1,7 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -26,19 +28,13 @@ public class PlayerManager : MonoBehaviour
 
     #region Local Player Details
 
-    public GameObject LocalPlayer
-    {
-        get
-        {
-            return GameObject.FindGameObjectWithTag("Player");
-        }
-    }
+    public GameObject LocalPlayer { get; set; }
 
     public CharacterInventoryAndInteraction LocalPlayerInventory
     {
         get
         {
-            var player = GameObject.FindGameObjectWithTag("Player");
+            var player = LocalPlayer;
             return player.GetComponent<CharacterInventoryAndInteraction>();
         }
     }

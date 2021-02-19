@@ -97,7 +97,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnInventory(InputValue input)
     {
-        InventoryUI.Instance.ToggleInventory();
+        InventoryAndInteractionManager.Instance.InventoryUI.ToggleInventory();
     }
     
     /// <summary>

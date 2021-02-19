@@ -1,8 +1,9 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class Interactable : NetworkedBehaviour
 {
     public string DisplayName;
     

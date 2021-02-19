@@ -43,7 +43,11 @@ public class EntityCore : NetworkedBehaviour
 
     public override void NetworkStart()
     {
-        if (!IsLocalPlayer)
+        if (IsLocalPlayer)
+        {
+            PlayerManager.Instance.LocalPlayer = gameObject;
+        } 
+        else
         {
             // Disable camera
             EntityCamera.SetActive(false);
@@ -52,6 +56,7 @@ public class EntityCore : NetworkedBehaviour
             // Disable player input
             GetComponent<PlayerInput>().enabled = false;
         }
+        
     }
 
     // Update is called once per frame
