@@ -16,7 +16,7 @@ public class MouseSlotUI: SlotUI
     public int MouseYOffset = 0;
 
     [HideInInspector]
-    public CharacterInventoryAndInteraction CharacterInventory;
+    public EntityInventory CharacterInventory;
 
     public void Start()
     {

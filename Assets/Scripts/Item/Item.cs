@@ -37,7 +37,7 @@ public class Item
     /// <param name="stack">Item stack containing item to be used.</param>
     /// <param name="character">Character which used the item.</param>
     /// <returns>Whether usage was successful.</returns>
-    public virtual ItemStack OnUsePrimary(ItemStack stack, CharacterInventoryAndInteraction character)
+    public virtual ItemStack OnUsePrimary(ItemStack stack, EntityInventory character)
     {
         Debug.Log("No item selected, primary.");
         return null;
@@ -49,7 +49,7 @@ public class Item
     /// <param name="stack">Item stack containing item to be used.</param>
     /// <param name="character">Character which used the item.</param>
     /// <returns>Whether usage was successful.</returns>
-    public virtual ItemStack OnUseSecondary(ItemStack stack, CharacterInventoryAndInteraction character)
+    public virtual ItemStack OnUseSecondary(ItemStack stack, EntityInventory character)
     {
         Debug.Log("No item selected, secondary.");
         return null;

@@ -14,7 +14,7 @@ public class HealingItem : Item
     /// <param name="stack"></param>
     /// <param name="character"></param>
     /// <returns></returns>
-    public override ItemStack OnUseSecondary(ItemStack stack, CharacterInventoryAndInteraction character)
+    public override ItemStack OnUseSecondary(ItemStack stack, EntityInventory character)
     {
         var resultStack = new ItemStack(stack.ItemId, stack.Quantity);
 

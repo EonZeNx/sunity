@@ -30,12 +30,12 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject LocalPlayer { get; set; }
 
-    public CharacterInventoryAndInteraction LocalPlayerInventory
+    public EntityInventory LocalPlayerInventory
     {
         get
         {
             var player = LocalPlayer;
-            return player.GetComponent<CharacterInventoryAndInteraction>();
+            return player.GetComponent<EntityInventory>();
         }
     }
 

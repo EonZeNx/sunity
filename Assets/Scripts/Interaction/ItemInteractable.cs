@@ -10,9 +10,15 @@ public class ItemInteractable : Interactable
 
     public ItemInteractable(): base() { }
 
-    public override void Interact(CharacterInventoryAndInteraction characterInventory)
+    public override void Interact(EntityInteraction entityInteraction)
     {
-        var overflow = characterInventory.PickupItemStack(new ItemStack(ItemId, Quantity));
+        var playerInventory = entityInteraction.GetComponent<EntityInventory>();
+        if(playerInventory == null)
+        {
+            return;
+        }
+
+        var overflow = playerInventory.PickupItemStack(new ItemStack(ItemId, Quantity));
         if (overflow.IsEmpty())
         {
             Destroy(gameObject);

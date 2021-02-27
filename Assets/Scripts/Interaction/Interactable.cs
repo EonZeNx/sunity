@@ -7,7 +7,7 @@ public class Interactable : NetworkedBehaviour
 {
     public string DisplayName;
     
-    public virtual void Interact(CharacterInventoryAndInteraction characterInventory)
+    public virtual void Interact(EntityInteraction characterInventory)
     {
         return;
     }

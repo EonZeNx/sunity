@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 /// - Item interaction and inventory
 /// - World interaction
 /// </summary>
-public class CharacterInventoryAndInteraction : NetworkedBehaviour
+public class EntityInventory : NetworkedBehaviour
 {
     #region Constructor and Variables
 
@@ -18,56 +18,6 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
     private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
     private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0));
-
-    [Header("Interaction")]
-    public Camera MainCamera;
-    public float InteractionDistance = 20.0f;
-    public Interactable InteractableInRange;
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!IsLocalPlayer)
-        {
-            return;
-        }
-
-        // Interaction
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
-        {
-            // TODO: Seperate raycast from object detection.
-            var lookDirection = MainCamera.transform.forward.normalized;
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(MainCamera.transform.position, lookDirection, out RaycastHit hit, InteractionDistance))
-            {
-                Debug.DrawRay(MainCamera.transform.position, lookDirection * hit.distance, Color.yellow);
-
-                var interactable = hit.collider.gameObject.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    InteractableInRange = interactable;
-                }
-            }
-            else
-            {
-                Debug.DrawRay(MainCamera.transform.position, lookDirection, Color.blue);
-
-                InteractableInRange = null;
-            }
-        }
-    }
-
-    // Rendering
-    private void LateUpdate()
-    {
-        if(InteractableInRange != null)
-        {
-            InventoryAndInteractionManager.Instance.InteractionText.text = InteractableInRange.DisplayName + " [Press F to interact]";
-        } else
-        {
-            InventoryAndInteractionManager.Instance.InteractionText.text = "";
-        }
-    }
 
     #endregion
 
@@ -116,19 +66,6 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
             {
                 InventoryAndInteractionManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
             }
-        }
-    }
-
-    /// <summary>
-    /// Player presses Interact key.
-    /// Interacts with interactable in the world.
-    /// </summary>
-    /// <param name="input"></param>
-    public void OnInteract(InputValue _)
-    {
-        if(InteractableInRange != null)
-        {
-            InteractableInRange.Interact(this);
         }
     }
 

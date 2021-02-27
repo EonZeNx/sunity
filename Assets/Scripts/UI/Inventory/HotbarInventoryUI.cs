@@ -30,7 +30,7 @@ public class HotbarInventoryUI : MonoBehaviour
     [Header("Hotbar State")]
     public int SelectedSlotIndex;
 
-    private CharacterInventoryAndInteraction CharacterInventory;
+    private EntityInventory CharacterInventory;
     private IList<InventorySlotUI> HotbarInventorySlots;
 
     // Start is called before the first frame update
