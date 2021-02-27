@@ -25,7 +25,7 @@ public class MouseSlotUI: SlotUI
 
     public void Update()
     {
-        ItemStack = CharacterInventory.MouseSlot;
+        ItemStack = CharacterInventory.GetMouseSlot();
     }
 
     public void LateUpdate()

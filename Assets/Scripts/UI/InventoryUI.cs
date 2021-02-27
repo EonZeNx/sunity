@@ -60,9 +60,9 @@ public class InventoryUI : MonoBehaviour
         HotbarInventorySlots = new List<InventorySlotUI>();
 
         CharacterInventory = PlayerManager.Instance.LocalPlayerInventory;
-        var mainInventory = CharacterInventory.MainInventory;
-        var hotbarInventory = CharacterInventory.HotbarInventory;
-        var mouseStack = CharacterInventory.MouseSlot;
+        var mainInventory = CharacterInventory.GetMainInventory();
+        var hotbarInventory = CharacterInventory.GetHotbarInventory();
+        var mouseStack = CharacterInventory.GetMouseSlot();
 
         // Create main inventory slots
         for (int row = 0; row < mainInventory.Rows; row++)

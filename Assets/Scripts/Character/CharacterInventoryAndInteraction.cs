@@ -15,24 +15,14 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     #region Constructor and Variables
 
     [Header("References")]
-    private NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
-    private NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
-    private NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0));
+    private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
+    private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
+    private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0));
 
     [Header("Interaction")]
     public Camera MainCamera;
     public float InteractionDistance = 20.0f;
     public Interactable InteractableInRange;
-
-    #endregion
-
-    #region Unity Lifecycle Methods
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -46,10 +36,9 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
         if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
             // TODO: Seperate raycast from object detection.
-            RaycastHit hit;
             var lookDirection = MainCamera.transform.forward.normalized;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(MainCamera.transform.position, lookDirection, out hit, InteractionDistance))
+            if (Physics.Raycast(MainCamera.transform.position, lookDirection, out RaycastHit hit, InteractionDistance))
             {
                 Debug.DrawRay(MainCamera.transform.position, lookDirection * hit.distance, Color.yellow);
 
@@ -89,7 +78,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// Opens inventory.
     /// </summary>
     /// <param name="input"></param>
-    public void OnInventory(InputValue input)
+    public void OnInventory(InputValue _)
     {
         InventoryAndInteractionManager.Instance.InventoryUI.ToggleInventory();
     }
@@ -99,7 +88,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// Performs primary action on selected hotbar item.
     /// </summary>
     /// <param name="input"></param>
-    public void OnPrimaryAction(InputValue input)
+    public void OnPrimaryAction(InputValue _)
     {
         if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
@@ -117,7 +106,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// Performs secondary action on selected hotbar item.
     /// </summary>
     /// <param name="input"></param>
-    public void OnSecondaryAction(InputValue input)
+    public void OnSecondaryAction(InputValue _)
     {
         if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
@@ -135,7 +124,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// Interacts with interactable in the world.
     /// </summary>
     /// <param name="input"></param>
-    public void OnInteract(InputValue input)
+    public void OnInteract(InputValue _)
     {
         if(InteractableInRange != null)
         {
@@ -175,7 +164,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
         return HotbarInventory.Value;
     }
 
-    public ItemStack GetMouseInventory()
+    public ItemStack GetMouseSlot()
     {
         return MouseSlot.Value;
     }

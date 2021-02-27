@@ -73,18 +73,18 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
     {
         var playerInventory = PlayerManager.Instance.LocalPlayerInventory;
 
-        var resultStack = Inventory.GetItemStack(Row, Col).OnPrimaryAction(playerInventory.MouseSlot);
-        playerInventory.MouseSlot.ItemId = resultStack.ItemId;
-        playerInventory.MouseSlot.Quantity = resultStack.Quantity;
+        var resultStack = Inventory.GetItemStack(Row, Col).OnPrimaryAction(playerInventory.GetMouseSlot());
+        playerInventory.GetMouseSlot().ItemId = resultStack.ItemId;
+        playerInventory.GetMouseSlot().Quantity = resultStack.Quantity;
     }
 
     public void SecondaryAction()
     {
         var playerInventory = PlayerManager.Instance.LocalPlayerInventory;
 
-        var resultStack = Inventory.GetItemStack(Row, Col).OnSecondaryAction(playerInventory.MouseSlot);
-        playerInventory.MouseSlot.ItemId = resultStack.ItemId;
-        playerInventory.MouseSlot.Quantity = resultStack.Quantity;
+        var resultStack = Inventory.GetItemStack(Row, Col).OnSecondaryAction(playerInventory.GetMouseSlot());
+        playerInventory.GetMouseSlot().ItemId = resultStack.ItemId;
+        playerInventory.GetMouseSlot().Quantity = resultStack.Quantity;
     }
 
     /// <summary>

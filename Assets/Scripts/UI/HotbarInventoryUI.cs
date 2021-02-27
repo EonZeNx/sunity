@@ -118,12 +118,6 @@ public class HotbarInventoryUI : MonoBehaviour
         CharacterInventory.GetHotbarInventory().SetItemStack(stack, 0, SelectedSlotIndex);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void LateUpdate()
     {
         if (ShouldUpdateSlotPositions)
