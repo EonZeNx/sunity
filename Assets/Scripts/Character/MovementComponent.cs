@@ -304,10 +304,17 @@ namespace Character
             float rotTargetAngle = Mathf.Atan2(lastMoveInput.x, lastMoveInput.z) * Mathf.Rad2Deg + aimLocation.eulerAngles.y;
             Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
 
+            // Ignore extra force if 
+            float dotDir = Vector3.Dot(_horiForces.normalized, moveDirection.normalized);
+            if (dotDir < 0)
+            {
+                bool isExceedingMaxSpeed = _horiForces.sqrMagnitude > basicSettings.maxSpeed * basicSettings.maxSpeed;
+                CalcGroundBrakingHForces(isExceedingMaxSpeed);
+            }
+            
             // Direction change consideration
             float velocitySize = (_horiForces + moveDirection).magnitude;
-            Vector3 inputDirection = _horiForces - ((_horiForces - moveDirection * velocitySize) *
-                                                    Mathf.Min(Time.deltaTime * friction, 1f));
+            Vector3 inputDirection = _horiForces - ((_horiForces - moveDirection * velocitySize) * Mathf.Min(Time.deltaTime * friction, 1f));
             Vector3 inputAcceleration = inputDirection * accel;
 
             // Check if new horizontal acceleration is exceeding the speed limit and adjust if so.
@@ -371,7 +378,7 @@ namespace Character
         /// </summary>
         private void CalcFallingHForces()
         {
-            CalcHInputForces(fallingSettings.lateralFriction, basicSettings.acceleration * fallingSettings.airControl, basicSettings.maxSpeed);
+            // CalcHInputForces(fallingSettings.lateralFriction, basicSettings.acceleration * fallingSettings.airControl, basicSettings.maxSpeed);
         }
         
         /// <summary>
