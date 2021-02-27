@@ -2,6 +2,7 @@ using MLAPI.Serialization.Pooled;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -110,20 +111,26 @@ public class Inventory
     /// <param name="instance"></param>
     public static void OnSerialize(Stream stream, Inventory instance)
     {
-        using PooledBitWriter writer = PooledBitWriter.Get(stream);
-        // Write dimensions
-        writer.WriteInt32Packed(instance.Rows);
-        writer.WriteInt32Packed(instance.Cols);
+        StringBuilder stringBuilder = new StringBuilder("Serializing inventory...");
 
-        // Write each item stack to the writer
-        for (var row = 0; row < instance.Rows; row++)
+        using (PooledBitWriter writer = PooledBitWriter.Get(stream))
         {
-            for (var col = 0; col < instance.Cols; col++)
+            // Write dimensions
+            writer.WriteInt32Packed(instance.Rows);
+            writer.WriteInt32Packed(instance.Cols);
+
+            // Write each item stack to the writer
+            for (var row = 0; row < instance.Rows; row++)
             {
-                var itemStack = instance.GetItemStack(row, col);
-                ItemStack.OnSerialize(stream, itemStack);
+                for (var col = 0; col < instance.Cols; col++)
+                {
+                    var itemStack = instance.GetItemStack(row, col);
+                    ItemStack.OnSerialize(stream, itemStack);
+                }
             }
         }
+
+        Debug.Log(stringBuilder.ToString());
     }
 
     /// <summary>
@@ -133,24 +140,49 @@ public class Inventory
     /// <returns></returns>
     public static Inventory OnDeserialize(Stream stream)
     {
-        using PooledBitReader reader = PooledBitReader.Get(stream);
-        // Get dimensions
-        var rows = reader.ReadInt32Packed();
-        var cols = reader.ReadInt32Packed();
+        Debug.Log("Deserializing inventory...");
 
-        var inventory = new Inventory(rows, cols);
-
-        // Get each item stack and place into inventory
-        for (var row = 0; row < rows; row++)
+        using (PooledBitReader reader = PooledBitReader.Get(stream))
         {
-            for (var col = 0; col < cols; col++)
+            // Get dimensions
+            var rows = reader.ReadInt32Packed();
+            var cols = reader.ReadInt32Packed();
+
+            var inventory = new Inventory(rows, cols);
+
+            // Get each item stack and place into inventory
+            for (var row = 0; row < rows; row++)
             {
-                var itemStack = ItemStack.OnDeserialize(stream);
-                inventory.SetItemStack(itemStack, row, col);
+                for (var col = 0; col < cols; col++)
+                {
+                    var itemStack = ItemStack.OnDeserialize(stream);
+                    inventory.SetItemStack(itemStack, row, col);
+                }
             }
+            return inventory;
+        }
+    }
+
+    #endregion
+
+    #region Debugging
+
+    public override string ToString()
+    {
+        var stringBuilder = new StringBuilder();
+
+        for (var row = Rows - 1; row >= 0; row--)
+        {
+            for (var col = 0; col < Cols; col++)
+            {
+                var itemStackString = GetItemStack(row, col);
+                stringBuilder.Append(col == Cols - 1 ? $"{itemStackString}": $"{itemStackString}, ");
+            }
+
+            if (row > 0) { stringBuilder.AppendLine(); }
         }
 
-        return inventory;
+        return stringBuilder.ToString();
     }
 
     #endregion

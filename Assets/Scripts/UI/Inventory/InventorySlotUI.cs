@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 /// <summary>
@@ -60,9 +56,6 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
                 case PointerEventData.InputButton.Right:
                     SecondaryAction();
                     break;
-                case PointerEventData.InputButton.Middle:
-                    InsertBandagesIntoInventory();
-                    break;
                 default:
                     break;
             }
@@ -85,13 +78,5 @@ public class InventorySlotUI : SlotUI, IPointerClickHandler
         var resultStack = Inventory.GetItemStack(Row, Col).OnSecondaryAction(playerInventory.GetMouseSlot());
         playerInventory.GetMouseSlot().ItemId = resultStack.ItemId;
         playerInventory.GetMouseSlot().Quantity = resultStack.Quantity;
-    }
-
-    /// <summary>
-    /// Spawns bandages. This is used for debugging purposes.
-    /// </summary>
-    public void InsertBandagesIntoInventory()
-    {
-        Inventory.InsertItemStackIntoInventory(new ItemStack("bandage", 20));
     }
 }

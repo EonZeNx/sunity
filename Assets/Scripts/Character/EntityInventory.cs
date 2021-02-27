@@ -1,4 +1,5 @@
 using MLAPI;
+using MLAPI.Messaging;
 using MLAPI.NetworkedVar;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,9 +16,15 @@ public class EntityInventory : NetworkedBehaviour
     #region Constructor and Variables
 
     [Header("References")]
-    private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
-    private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
-    private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryManager.NULL_ITEM_ID, 0));
+    private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(
+        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone }, 
+        new Inventory(4, 10));
+    private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(
+        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone },
+        new Inventory(1, 10));
+    private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(
+        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone }, 
+        new ItemStack(InventoryManager.NULL_ITEM_ID, 0));
 
     #endregion
 
@@ -112,11 +119,27 @@ public class EntityInventory : NetworkedBehaviour
     /// </summary>
     /// <param name="stack"></param>
     /// <returns></returns>
+    [ServerRPC(RequireOwnership = false)]
     public ItemStack PickupItemStack(ItemStack stack)
     {
+        Debug.Log($"Attempting to insert {stack} into Player {OwnerClientId}'s inventory.");
         var overflow = HotbarInventory.Value.InsertItemStackIntoInventory(stack);
         overflow = MainInventory.Value.InsertItemStackIntoInventory(overflow);
+        
+        HotbarInventory.isDirty = true;
+        MainInventory.isDirty = true;
+        MouseSlot.isDirty = true;
+        
         return overflow;
+    }
+
+    #endregion
+
+    #region Dev Commands
+
+    public void GiveBandages()
+    {
+        PickupItemStack(new ItemStack("bandage", 20));
     }
 
     #endregion

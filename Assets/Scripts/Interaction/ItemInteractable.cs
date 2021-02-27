@@ -1,4 +1,5 @@
 using MLAPI;
+using MLAPI.Messaging;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class ItemInteractable : Interactable
 
     public ItemInteractable(): base() { }
 
+    [ServerRPC(RequireOwnership = false)]
     public override void Interact(EntityInteraction entityInteraction)
     {
         var playerInventory = entityInteraction.GetComponent<EntityInventory>();
@@ -22,6 +24,7 @@ public class ItemInteractable : Interactable
         if (overflow.IsEmpty())
         {
             Destroy(gameObject);
+            NetworkedObject.UnSpawn();
         } else
         {
             ItemId = overflow.ItemId;

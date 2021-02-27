@@ -182,19 +182,33 @@ public class ItemStack
 
     public static void OnSerialize(Stream stream, ItemStack instance)
     {
-        using PooledBitWriter writer = PooledBitWriter.Get(stream);
-        // Write item id and quantity
-        writer.WriteStringPacked(instance.ItemId);
-        writer.WriteInt32(instance.Quantity);
+        using (PooledBitWriter writer = PooledBitWriter.Get(stream))
+        {
+            // Write item id and quantity
+            writer.WriteStringPacked(instance.ItemId);
+            writer.WriteInt32Packed(instance.Quantity);
+        }
     }
 
     public static ItemStack OnDeserialize(Stream stream)
     {
-        using PooledBitReader reader = PooledBitReader.Get(stream);
-        // Read item id and quantity
-        var itemStackId = reader.ReadStringPacked().ToString();
-        var itemStackQuantity = reader.ReadInt32Packed();
-        return new ItemStack(itemStackId, itemStackQuantity);
+
+        using (PooledBitReader reader = PooledBitReader.Get(stream))
+        {
+            // Read item id and quantity
+            var itemStackId = reader.ReadStringPacked().ToString();
+            var itemStackQuantity = reader.ReadInt32Packed();
+            return new ItemStack(itemStackId, itemStackQuantity);
+        }
+    }
+
+    #endregion
+
+    #region Debugging
+
+    public override string ToString()
+    {
+        return $"[{ItemId}, {Quantity}]";
     }
 
     #endregion

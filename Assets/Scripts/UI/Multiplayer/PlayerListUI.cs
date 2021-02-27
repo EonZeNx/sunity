@@ -9,21 +9,22 @@ public class PlayerListUI : MonoBehaviour
     [Header("Prefabs")]
     public GameObject playerNamePrefab;
 
-    private List<PlayerNameUI> listOfNames;
+    private List<GameObject> listOfNames;
 
     // Start is called before the first frame update
     void Start()
     {
-        listOfNames = new List<PlayerNameUI>();
+        listOfNames = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        var numberOfClients = NetworkingManager.Singleton.ConnectedClientsList.Count;
+        var numberOfClients = PlayerManager.Singleton.PlayerList.Count;
         if(listOfNames.Count != numberOfClients)
         {
             UpdatePlayerList();
+            Debug.Log($"New player list for {listOfNames.Count} players");
         }
     }
 
@@ -33,20 +34,19 @@ public class PlayerListUI : MonoBehaviour
     public void UpdatePlayerList()
     {
         // Destroy list of players
-        foreach(var name in listOfNames)
+        foreach (var name in listOfNames)
         {
             Destroy(name);
         }
+        listOfNames = new List<GameObject>();
 
         // Instantiate new list of players
-        var connectedClients = NetworkingManager.Singleton.ConnectedClientsList;
-        foreach(var connectionClient in connectedClients)
+        var connectedClients = PlayerManager.Singleton.PlayerList;
+        foreach(var playerObject in connectedClients)
         {
-            var playerObject = connectionClient.PlayerObject;
-
             // Instantiate name and parent it
-            var playerName = Instantiate(playerNamePrefab, transform).GetComponent<PlayerNameUI>();
-            playerName.playerNameText.text = $"Player {playerObject.OwnerClientId}";
+            var playerName = Instantiate(playerNamePrefab, transform);
+            playerName.GetComponent<PlayerNameUI>().playerNameText.text = $"Player {playerObject.OwnerClientId}";
             listOfNames.Add(playerName);
         }
     }

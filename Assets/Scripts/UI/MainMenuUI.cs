@@ -21,7 +21,11 @@ public class MainMenuUI : MonoBehaviour
     {
         try
         {
-            var port = int.Parse(HostPortText.text);
+            var port = 7777;
+            if (HostPortText.text != "")
+            {
+                port = int.Parse(HostPortText.text);
+            }
 
             var networkManager = NetworkingManager.Singleton;
             var networkTransport = NetworkingManager.Singleton.GetComponent<UnetTransport>();
@@ -31,7 +35,6 @@ public class MainMenuUI : MonoBehaviour
             networkManager.StartHost();
 
             gameObject.SetActive(false);
-            GameUI.SetActive(true);
         } catch (Exception)
         {
             ErrorText.text = "An error has occured.";
@@ -42,8 +45,16 @@ public class MainMenuUI : MonoBehaviour
     {
         try
         {
-            var ip = JoinIpText.text;
-            var port = int.Parse(JoinPortText.text);
+            var ip = "127.0.0.1";
+            var port = 7777;
+            if(JoinIpText.text != "")
+            {
+                ip = JoinIpText.text;
+            }
+            if(JoinPortText.text != "")
+            {
+                port = int.Parse(JoinPortText.text);
+            }
 
             var networkManager = NetworkingManager.Singleton;
             var networkTransport = NetworkingManager.Singleton.GetComponent<UnetTransport>();
@@ -54,7 +65,6 @@ public class MainMenuUI : MonoBehaviour
             networkManager.StartClient();
 
             gameObject.SetActive(false);
-            GameUI.SetActive(true);
         } catch (Exception)
         {
             ErrorText.text = "An error has occured.";

@@ -33,8 +33,7 @@ public class HotbarInventoryUI : MonoBehaviour
     private EntityInventory CharacterInventory;
     private IList<InventorySlotUI> HotbarInventorySlots;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         SelectedSlotIndex = 0;
         HotbarInventorySlots = new List<InventorySlotUI>();
@@ -60,6 +59,17 @@ public class HotbarInventoryUI : MonoBehaviour
 
         UpdateHotbarSlotPositions();
         UpdateHotbarPointerPosition();
+    }
+
+    public void UpdateReferences()
+    {
+        CharacterInventory = PlayerManager.Singleton.LocalPlayerInventory;
+        var hotbarInventory = CharacterInventory.GetHotbarInventory();
+
+        foreach(var slot in HotbarInventorySlots)
+        {
+            slot.Inventory = hotbarInventory;
+        }
     }
 
     public void NavigateToRight()
@@ -120,6 +130,8 @@ public class HotbarInventoryUI : MonoBehaviour
 
     void LateUpdate()
     {
+        UpdateReferences();
+
         if (ShouldUpdateSlotPositions)
         {
             UpdateHotbarSlotPositions();

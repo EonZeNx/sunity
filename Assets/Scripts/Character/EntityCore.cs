@@ -45,17 +45,31 @@ public class EntityCore : NetworkedBehaviour
     {
         if (IsLocalPlayer)
         {
+            Debug.Log("Local player has been set. Initializing GUI.");
             PlayerManager.Singleton.LocalPlayer = gameObject;
+
+            InventoryManager.Singleton.InventoryUI.Init();
+            InventoryManager.Singleton.HotbarUI.Init();
+
+            PlayerManager.Singleton.PlayerUI.SetActive(true);
         } 
         else
         {
             // Disable camera
             EntityCamera.SetActive(false);
-            Debug.Log($"Camera for this player {this.NetworkId} has been disabled.");
+            Debug.Log($"Camera for this player {OwnerClientId} has been disabled.");
 
             // Disable player input
             GetComponent<PlayerInput>().enabled = false;
         }
+
+        // Add this player to local list
+        PlayerManager.Singleton.PlayerList.Add(NetworkedObject);
+        Debug.Log($"Adding player {NetworkedObject.OwnerClientId} to the player list");
+    }
+
+    private void OnDestroy()
+    {
         
     }
 }

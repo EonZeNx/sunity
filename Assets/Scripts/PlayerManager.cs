@@ -26,6 +26,18 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    #region UI
+
+    public GameObject PlayerUI;
+
+    #endregion
+
+    #region All Player Info
+
+    public List<NetworkedObject> PlayerList { get; set; }
+
+    #endregion
+
     #region Local Player Details
 
     public GameObject LocalPlayer { get; set; }
@@ -46,7 +58,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerList = new List<NetworkedObject>();
     }
 
     // Update is called once per frame

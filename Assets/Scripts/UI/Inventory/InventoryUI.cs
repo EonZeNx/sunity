@@ -54,7 +54,7 @@ public class InventoryUI : MonoBehaviour
     private MouseSlotUI MouseInventorySlot;
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         MainInventorySlots = new List<InventorySlotUI>();
         HotbarInventorySlots = new List<InventorySlotUI>();
@@ -104,6 +104,28 @@ public class InventoryUI : MonoBehaviour
         UpdateInventorySlotPositions();
     }
 
+    public void UpdateReferences()
+    {
+        CharacterInventory = PlayerManager.Singleton.LocalPlayerInventory;
+        var mainInventory = CharacterInventory.GetMainInventory();
+        var hotbarInventory = CharacterInventory.GetHotbarInventory();
+
+        // Main Inventory slots
+        foreach(var slot in MainInventorySlots)
+        {
+            slot.Inventory = mainInventory;
+        }
+
+        // Hotbar slots
+        foreach(var slot in HotbarInventorySlots)
+        {
+            slot.Inventory = hotbarInventory;
+        }
+
+        // Mouse slot
+        MouseInventorySlot.CharacterInventory = CharacterInventory;
+    }
+
     /// <summary>
     /// Update the local XYZ positioning of inventory slots, based on their positioning.
     /// </summary>
@@ -131,6 +153,8 @@ public class InventoryUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateReferences();
+
         // Open or close inventory based on MainInventoryOpen
         if (mainInventoryOpen && !InventoryPanel.activeSelf)
         {
