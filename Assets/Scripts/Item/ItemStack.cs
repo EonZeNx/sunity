@@ -184,7 +184,9 @@ public class ItemStack
     {
         using (PooledBitWriter writer = PooledBitWriter.Get(stream)) // Serialize
         {
-            writer.WriteStringPacked("");
+            // Write item id and quantity
+            writer.WriteStringPacked(instance.ItemId);
+            writer.WriteInt32(instance.Quantity);
         }
     }
 
@@ -192,7 +194,10 @@ public class ItemStack
     {
         using (PooledBitReader reader = PooledBitReader.Get(stream)) // Deserialize
         {
-            return new ItemStack("null", 0);
+            // Read item id and quantity
+            var itemStackId = reader.ReadStringPacked().ToString();
+            var itemStackQuantity = reader.ReadInt32Packed();
+            return new ItemStack(itemStackId, itemStackQuantity);
         }
     }
 

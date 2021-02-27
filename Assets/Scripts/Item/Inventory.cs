@@ -67,7 +67,7 @@ public class Inventory
     {
         for (int row = Rows-1; row >= 0; row--) // Top row takes priority
         {
-            for (int col = 0; col < Cols; col++)
+            for (int col = 0; col < Cols; col++) // Left column takes priority
             {
                 // Find first valid slot
                 var slot = ItemSlots[row, col];
@@ -103,19 +103,57 @@ public class Inventory
 
     #region Networking
 
+    /// <summary>
+    /// Serialize inventory's items and dimensions into strean.
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="instance"></param>
     public static void OnSerialize(Stream stream, Inventory instance)
     {
         using (PooledBitWriter writer = PooledBitWriter.Get(stream)) // Serialize
         {
-            writer.WriteStringPacked("");
+            // Write dimensions
+            writer.WriteInt32Packed(instance.Rows);
+            writer.WriteInt32Packed(instance.Cols);
+
+            // Write each item stack to the writer
+            for (var row = 0; row < instance.Rows; row++)
+            {
+                for(var col = 0; col < instance.Cols; col++)
+                {
+                    var itemStack = instance.GetItemStack(row, col);
+                    ItemStack.OnSerialize(stream, itemStack);
+                }
+            }
         }
     }
 
+    /// <summary>
+    /// Deserialize inventory's items and dimensions from stream.
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <returns></returns>
     public static Inventory OnDeserialize(Stream stream)
     {
         using (PooledBitReader reader = PooledBitReader.Get(stream)) // Deserialize
         {
-            return new Inventory(1, 1);
+            // Get dimensions
+            var rows = reader.ReadInt32Packed();
+            var cols = reader.ReadInt32Packed();
+
+            var inventory = new Inventory(rows, cols);
+
+            // Get each item stack and place into inventory
+            for (var row = 0; row < rows; row++)
+            {
+                for(var col = 0; col < cols; col++)
+                {
+                    var itemStack = ItemStack.OnDeserialize(stream);
+                    inventory.SetItemStack(itemStack, row, col);
+                }
+            }
+
+            return inventory;
         }
     }
 

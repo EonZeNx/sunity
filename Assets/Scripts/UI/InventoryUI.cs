@@ -35,7 +35,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject MouseSlotPrefab;
 
     [Header("Inventory State")]
-    public bool MainInventoryOpen;
+    public bool mainInventoryOpen;
 
     [Header("UI")]
     public float OverallWidthOffset = -77;
@@ -132,11 +132,11 @@ public class InventoryUI : MonoBehaviour
     void Update()
     {
         // Open or close inventory based on MainInventoryOpen
-        if (MainInventoryOpen && !InventoryPanel.activeSelf)
+        if (mainInventoryOpen && !InventoryPanel.activeSelf)
         {
             InventoryPanel.SetActive(true);
         }
-        else if (!MainInventoryOpen && InventoryPanel.activeSelf)
+        else if (!mainInventoryOpen && InventoryPanel.activeSelf)
         {
             InventoryPanel.SetActive(false);
         }
@@ -153,6 +153,6 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
-        MainInventoryOpen = !MainInventoryOpen;
+        mainInventoryOpen = !mainInventoryOpen;
     }
 }

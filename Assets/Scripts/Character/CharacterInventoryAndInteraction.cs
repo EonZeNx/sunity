@@ -1,4 +1,5 @@
 using MLAPI;
+using MLAPI.NetworkedVar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,21 +15,14 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     #region Constructor and Variables
 
     [Header("References")]
-    public readonly Inventory MainInventory;
-    public readonly Inventory HotbarInventory;
-    public readonly ItemStack MouseSlot;
+    private NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
+    private NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
+    private NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0));
 
     [Header("Interaction")]
     public Camera MainCamera;
     public float InteractionDistance = 20.0f;
     public Interactable InteractableInRange;
-
-    public CharacterInventoryAndInteraction(): base()
-    {
-        MainInventory = new Inventory(4, 10);
-        HotbarInventory = new Inventory(1, 10);
-        MouseSlot = new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0);
-    }
 
     #endregion
 
@@ -49,7 +43,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
         }
 
         // Interaction
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
             // TODO: Seperate raycast from object detection.
             RaycastHit hit;
@@ -107,7 +101,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnPrimaryAction(InputValue input)
     {
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
             var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUsePrimary(itemStack, this);
@@ -125,7 +119,7 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnSecondaryAction(InputValue input)
     {
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.MainInventoryOpen)
+        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
         {
             var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
@@ -171,6 +165,21 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
 
     #region Inventory Manipulation
 
+    public Inventory GetMainInventory()
+    {
+        return MainInventory.Value;
+    }
+
+    public Inventory GetHotbarInventory()
+    {
+        return HotbarInventory.Value;
+    }
+
+    public ItemStack GetMouseInventory()
+    {
+        return MouseSlot.Value;
+    }
+
     /// <summary>
     /// Insert an item stack into this character's overall inventory.
     /// Hotbar takes priority, then Main Inventory.
@@ -179,8 +188,8 @@ public class CharacterInventoryAndInteraction : NetworkedBehaviour
     /// <returns></returns>
     public ItemStack PickupItemStack(ItemStack stack)
     {
-        var overflow = HotbarInventory.InsertItemStackIntoInventory(stack);
-        overflow = MainInventory.InsertItemStackIntoInventory(overflow);
+        var overflow = HotbarInventory.Value.InsertItemStackIntoInventory(stack);
+        overflow = MainInventory.Value.InsertItemStackIntoInventory(overflow);
         return overflow;
     }
 

@@ -40,7 +40,7 @@ public class HotbarInventoryUI : MonoBehaviour
         HotbarInventorySlots = new List<InventorySlotUI>();
 
         CharacterInventory = PlayerManager.Instance.LocalPlayerInventory;
-        var hotbarInventory = CharacterInventory.HotbarInventory;
+        var hotbarInventory = CharacterInventory.GetHotbarInventory();
 
         // Create hotbar inventory slots
         for (int row = 0; row < hotbarInventory.Rows; row++)
@@ -110,12 +110,12 @@ public class HotbarInventoryUI : MonoBehaviour
 
     public ItemStack GetSelectedItemStack()
     {
-        return CharacterInventory.HotbarInventory.GetItemStack(0, SelectedSlotIndex);
+        return CharacterInventory.GetHotbarInventory().GetItemStack(0, SelectedSlotIndex);
     }
 
     public void SetSelectedItemStack(ItemStack stack)
     {
-        CharacterInventory.HotbarInventory.SetItemStack(stack, 0, SelectedSlotIndex);
+        CharacterInventory.GetHotbarInventory().SetItemStack(stack, 0, SelectedSlotIndex);
     }
 
     // Update is called once per frame
