@@ -39,7 +39,7 @@ public class Item
     /// <returns>Whether usage was successful.</returns>
     public virtual ItemStack OnUsePrimary(ItemStack stack, EntityInventory character)
     {
-        Debug.Log("No item selected, primary.");
+        Debug.Log("Can't use primary action on selected item.");
         return null;
     }
 
@@ -51,7 +51,7 @@ public class Item
     /// <returns>Whether usage was successful.</returns>
     public virtual ItemStack OnUseSecondary(ItemStack stack, EntityInventory character)
     {
-        Debug.Log("No item selected, secondary.");
+        Debug.Log("Can't use secondary action on selected item.");
         return null;
     }
 

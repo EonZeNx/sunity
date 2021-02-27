@@ -31,7 +31,7 @@ public class ItemStack
     /// <returns>Item definition object.</returns>
     public Item GetItemDefinition()
     {
-        var gameManager = InventoryAndInteractionManager.Instance;
+        var gameManager = InventoryManager.Singleton;
         return gameManager.GetItemById(ItemId);
     }
 
@@ -50,7 +50,7 @@ public class ItemStack
     /// <returns></returns>
     public bool IsEmpty()
     {
-        return ItemId == InventoryAndInteractionManager.NULL_ITEM_ID || Quantity == 0;
+        return ItemId == InventoryManager.NULL_ITEM_ID || Quantity == 0;
     }
 
     #endregion
@@ -148,7 +148,7 @@ public class ItemStack
         
         if (isEmpty)
         {
-            ItemId = InventoryAndInteractionManager.NULL_ITEM_ID;
+            ItemId = InventoryManager.NULL_ITEM_ID;
             Quantity = 0;
         }
 

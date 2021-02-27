@@ -10,23 +10,23 @@ using UnityEngine.UI;
 /// <summary>
 /// InventoryAndInteractionManager contains global information about item/interaction UI elements and state, as well as helper methods.
 /// </summary>
-public class InventoryAndInteractionManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
     #region Singleton
 
-    private static InventoryAndInteractionManager _instance;
+    private static InventoryManager _singleton;
 
-    public static InventoryAndInteractionManager Instance { get { return _instance; } }
+    public static InventoryManager Singleton { get { return _singleton; } }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (_singleton != null && _singleton != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            _instance = this;
+            _singleton = this;
         }
     }
 
@@ -48,7 +48,6 @@ public class InventoryAndInteractionManager : MonoBehaviour
 
     public InventoryUI InventoryUI;
     public HotbarInventoryUI HotbarUI;
-    public Text InteractionText;
 
     #endregion
 

@@ -45,7 +45,7 @@ public class EntityCore : NetworkedBehaviour
     {
         if (IsLocalPlayer)
         {
-            PlayerManager.Instance.LocalPlayer = gameObject;
+            PlayerManager.Singleton.LocalPlayer = gameObject;
         } 
         else
         {

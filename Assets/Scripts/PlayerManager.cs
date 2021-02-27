@@ -8,19 +8,19 @@ public class PlayerManager : MonoBehaviour
 {
     #region Singleton
 
-    private static PlayerManager _instance;
+    private static PlayerManager _singleton;
 
-    public static PlayerManager Instance { get { return _instance; } }
+    public static PlayerManager Singleton { get { return _singleton; } }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (_singleton != null && _singleton != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            _instance = this;
+            _singleton = this;
         }
     }
 

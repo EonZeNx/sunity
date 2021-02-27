@@ -39,7 +39,7 @@ public class HotbarInventoryUI : MonoBehaviour
         SelectedSlotIndex = 0;
         HotbarInventorySlots = new List<InventorySlotUI>();
 
-        CharacterInventory = PlayerManager.Instance.LocalPlayerInventory;
+        CharacterInventory = PlayerManager.Singleton.LocalPlayerInventory;
         var hotbarInventory = CharacterInventory.GetHotbarInventory();
 
         // Create hotbar inventory slots

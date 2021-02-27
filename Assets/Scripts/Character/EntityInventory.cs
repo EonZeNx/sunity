@@ -17,7 +17,7 @@ public class EntityInventory : NetworkedBehaviour
     [Header("References")]
     private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(new Inventory(4, 10));
     private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(new Inventory(1, 10));
-    private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryAndInteractionManager.NULL_ITEM_ID, 0));
+    private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(new ItemStack(InventoryManager.NULL_ITEM_ID, 0));
 
     #endregion
 
@@ -30,7 +30,7 @@ public class EntityInventory : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnInventory(InputValue _)
     {
-        InventoryAndInteractionManager.Instance.InventoryUI.ToggleInventory();
+        InventoryManager.Singleton.InventoryUI.ToggleInventory();
     }
     
     /// <summary>
@@ -40,13 +40,13 @@ public class EntityInventory : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnPrimaryAction(InputValue _)
     {
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
+        if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
         {
-            var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
+            var itemStack = InventoryManager.Singleton.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUsePrimary(itemStack, this);
             if (newStack != null)
             {
-                InventoryAndInteractionManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
+                InventoryManager.Singleton.HotbarUI.SetSelectedItemStack(newStack);
             }
         }
     }
@@ -58,13 +58,13 @@ public class EntityInventory : NetworkedBehaviour
     /// <param name="input"></param>
     public void OnSecondaryAction(InputValue _)
     {
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
+        if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
         {
-            var itemStack = InventoryAndInteractionManager.Instance.HotbarUI.GetSelectedItemStack();
+            var itemStack = InventoryManager.Singleton.HotbarUI.GetSelectedItemStack();
             var newStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
             if (newStack != null)
             {
-                InventoryAndInteractionManager.Instance.HotbarUI.SetSelectedItemStack(newStack);
+                InventoryManager.Singleton.HotbarUI.SetSelectedItemStack(newStack);
             }
         }
     }
@@ -79,11 +79,11 @@ public class EntityInventory : NetworkedBehaviour
         var scrollValue = scroll.Get<Vector2>().y;
         if (scrollValue > 20)
         {
-            InventoryAndInteractionManager.Instance.HotbarUI.NavigateToLeft();
+            InventoryManager.Singleton.HotbarUI.NavigateToLeft();
         }
         else if (scrollValue < -20)
         {
-            InventoryAndInteractionManager.Instance.HotbarUI.NavigateToRight();
+            InventoryManager.Singleton.HotbarUI.NavigateToRight();
         }
     }
 

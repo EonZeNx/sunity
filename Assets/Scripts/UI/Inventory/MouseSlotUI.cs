@@ -20,7 +20,7 @@ public class MouseSlotUI: SlotUI
 
     public void Start()
     {
-        CharacterInventory = PlayerManager.Instance.LocalPlayerInventory;
+        CharacterInventory = PlayerManager.Singleton.LocalPlayerInventory;
     }
 
     public void Update()

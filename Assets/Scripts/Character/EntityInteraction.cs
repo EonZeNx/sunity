@@ -18,7 +18,7 @@ public class EntityInteraction : NetworkedBehaviour
         }
 
         // Interaction
-        if (!InventoryAndInteractionManager.Instance.InventoryUI.mainInventoryOpen)
+        if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
         {
             // TODO: Seperate raycast from object detection.
             var lookDirection = MainCamera.transform.forward.normalized;
@@ -61,11 +61,11 @@ public class EntityInteraction : NetworkedBehaviour
     {
         if (InteractableInRange != null)
         {
-            InventoryAndInteractionManager.Instance.InteractionText.text = InteractableInRange.DisplayName + " [Press F to interact]";
+            InteractionManager.Singleton.InteractionText.text = InteractableInRange.DisplayName + " [Press F to interact]";
         }
         else
         {
-            InventoryAndInteractionManager.Instance.InteractionText.text = "";
+            InteractionManager.Singleton.InteractionText.text = "";
         }
     }
 }
