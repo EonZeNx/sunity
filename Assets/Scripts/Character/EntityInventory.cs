@@ -45,8 +45,12 @@ public class EntityInventory : NetworkedBehaviour
     /// Opens inventory.
     /// </summary>
     /// <param name="input"></param>
-    public void OnInventory(InputValue _)
+    public void OnInventory(InputValue inputValue)
     {
+        if (inputValue.Get<float>() <= 0.1f)
+        {
+            return;
+        }
         InventoryManager.Singleton.InventoryUI.ToggleInventory();
     }
 
