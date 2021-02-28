@@ -5,7 +5,7 @@ using AdvancedMovement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RunComponent : MonoBehaviour
+public class SprintComponent : MonoBehaviour
 {
     #region Variables
     
@@ -14,13 +14,13 @@ public class RunComponent : MonoBehaviour
 
     [Header("Sprint settings")]
     public bool sprintEnabled = true;
-    public GMoveStruct sprinting = new GMoveStruct();
+    public GMoveStruct sprinting;
 
     #region Properties
 
     public bool IsSprinting
     {
-        get { return advEntityCore.Gait == EGait.Running; }
+        get { return advEntityCore.Gait == EGait.Sprinting; }
     }
 
     #endregion
@@ -28,6 +28,12 @@ public class RunComponent : MonoBehaviour
     #endregion
 
     #region Utils
+    
+    public SprintComponent()
+    {
+        sprinting = new GMoveStruct(2f, 15f, 30f, 2f, 5f);
+    }
+    
     private void Awake()
     {
         // Auto-setter just in case.
@@ -39,7 +45,7 @@ public class RunComponent : MonoBehaviour
     
     #endregion
 
-    #region Inputs
+    #region Input Messages
 
     public void OnSprint(InputValue value)
     {
@@ -47,7 +53,7 @@ public class RunComponent : MonoBehaviour
         bool newIsSprinting = sprintValue > 0.5f;
         
         // Quick exit.
-        if (newIsSprinting == IsSprinting) { return; }
+        if (newIsSprinting == IsSprinting) return;
 
         if (newIsSprinting)
         {
@@ -69,7 +75,7 @@ public class RunComponent : MonoBehaviour
         if (!sprintEnabled) return;
 
         advEntityCore.CurrentGMove = sprinting;
-        advEntityCore.Gait = EGait.Running;
+        advEntityCore.Gait = EGait.Sprinting;
     }
 
     #endregion

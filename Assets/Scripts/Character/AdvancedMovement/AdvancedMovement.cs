@@ -77,7 +77,7 @@ namespace AdvancedMovement
     public enum EGait
     {
         Jogging,
-        Running
+        Sprinting
     }
 
     #endregion

@@ -28,7 +28,7 @@ public class AdvancedEntityCore : MonoBehaviour
     public float ySensitivity = 1f;
     private float _cameraPitch = 0f;
     private Vector3 _moveInput;
-    public bool hasMoveInput => _moveInput.sqrMagnitude > 0.1f;
+    public bool hasMoveInput;
 
     #endregion
 
@@ -108,6 +108,7 @@ public class AdvancedEntityCore : MonoBehaviour
     public void OnMove(InputValue value)
     {
         Vector2 inputVec = value.Get<Vector2>();
+        hasMoveInput = Mathf.Abs(inputVec.x) > 0.01f || Mathf.Abs(inputVec.y) > 0.01f;
         _moveInput = new Vector3(inputVec.x, 0f, inputVec.y).normalized;
     }
     
@@ -156,12 +157,17 @@ public class AdvancedEntityCore : MonoBehaviour
 
     private void CalcGBrakingForces(bool isExceedingMaxSpeed)
     {
-        Vector2 brakingDirection = -xzVelocity.normalized;
-        Vector2 newXZVelocity = xzVelocity 
-                                + (  _currentGMove.brakingDeceleration 
-                                   * _currentGMove.brakingFriction 
-                                   * Time.deltaTime
-                                ) * brakingDirection;
+        // Reset inputVelocity to prevent old input from adding to new input.
+        inputVelocity = Vector3.zero;
+
+        // Quick exit.
+        if (_velocity == Vector3.zero) return;
+        
+        // Calculate braking forces.
+        Vector2 brakingDirection = (-xzVelocity).normalized;
+        float frictionComponent = _currentGMove.brakingFriction * Time.deltaTime;
+        Vector2 deltaXZVelocity = (_currentGMove.brakingDeceleration * frictionComponent) * brakingDirection;
+        Vector2 newXZVelocity = xzVelocity + deltaXZVelocity;
         
         // If was exceeding max speed but no longer, adjust.
         if (isExceedingMaxSpeed && (newXZVelocity.sqrMagnitude < Mathf.Pow(_currentGMove.maxSpeed, 2)))
@@ -178,26 +184,24 @@ public class AdvancedEntityCore : MonoBehaviour
         {
             // TODO: Make compatible with custom gravity direction.
             // Will need to map world space velocity to local space, then grab only XZ component.
-            _velocity += new Vector3(newXZVelocity.x, 0f, newXZVelocity.y);
+            _velocity = new Vector3(newXZVelocity.x, 0f, newXZVelocity.y);
         }
     }
 
     private void CalcGInputForces()
     {
-        // Quick exit.
-        if (!hasMoveInput) return;
-        
         // Lateral movement calc
         // x then z due to Unity's different coord layout
         float rotTargetAngle = Mathf.Atan2(_moveInput.x, _moveInput.z) * Mathf.Rad2Deg + self.eulerAngles.y;
         Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
-        Vector3 moveAcceleration = moveDirection * _currentGMove.acceleration;
+
+        float frictionComponent = _currentGMove.friction * Time.deltaTime;
+        Vector3 moveComponent = moveDirection * (_currentGMove.acceleration * frictionComponent);
+        Vector3 velocityComponent = (1f - frictionComponent) * _velocity;
+
+        float ratio = (Vector3.Dot(moveDirection.normalized, _velocity.normalized) - 3f) / -2f;
         
-        float velocitySize = (_velocity + moveAcceleration).magnitude;
-        inputVelocity = _velocity - (
-            (_velocity - moveDirection * velocitySize)
-            * Mathf.Min(_currentGMove.friction * Time.deltaTime, 1f)
-        );
+        inputVelocity = velocityComponent + (moveComponent * ratio);
 
         // If exceeding max speed, adjust.
         Vector3 newVelocity = inputVelocity;
@@ -236,9 +240,6 @@ public class AdvancedEntityCore : MonoBehaviour
     // Master Calculate Movement function
     private void CalcMovement()
     {
-        // Quick exit.
-        if (!hasMoveInput) { return; }
-        
         if (IsGrounded) { CalcGMovement(); }
         else { CalcFMovement(); }
         
