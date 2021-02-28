@@ -330,26 +330,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 447776463000849562, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-      propertyPath: jogging.friction
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 447776463000849562, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-      propertyPath: jogging.maxSpeed
-      value: 2048
-      objectReference: {fileID: 0}
-    - target: {fileID: 447776463000849562, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-      propertyPath: jogging.acceleration
-      value: 2048
-      objectReference: {fileID: 0}
-    - target: {fileID: 447776463000849562, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-      propertyPath: jogging.brakingFriction
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 447776463000849562, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-      propertyPath: jogging.brakingDeceleration
-      value: 2048
-      objectReference: {fileID: 0}
     - target: {fileID: 7459811434122827800, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
       propertyPath: m_RootOrder
       value: 1
