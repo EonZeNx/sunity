@@ -1,3 +1,4 @@
+using MLAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions.Must;
 
 namespace Character
 {
-    public class MovementComponent : MonoBehaviour
+    public class MovementComponent : NetworkedBehaviour
     {
         #region Structs
         [System.Serializable]
@@ -451,7 +452,7 @@ namespace Character
             acceleration += globalSettings.entityUp * _vertForces;
             controller.Move(acceleration * Time.deltaTime);
         }
-        
+
         #endregion
 
         /// <summary>
@@ -459,9 +460,14 @@ namespace Character
         /// </summary>
         void Update()
         {
+            if (!IsLocalPlayer)
+            {
+                return;
+            }
+
             GroundCheck();
             CalcMovement();
-            
+
             UpdateReadForces();
         }
     }

@@ -1,9 +1,10 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class IndependentBodyRotation : MonoBehaviour
+public class IndependentBodyRotation : NetworkedBehaviour
 {
     /// <summary>
     /// References to the independently rotating parts

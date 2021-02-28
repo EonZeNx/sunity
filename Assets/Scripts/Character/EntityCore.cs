@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Character;
+using MLAPI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EntityCore : MonoBehaviour
+public class EntityCore : NetworkedBehaviour
 {
     #region Variables
     [Header("External References")]
@@ -12,6 +13,8 @@ public class EntityCore : MonoBehaviour
     [Header("Input Variables")]
     public Vector3 lastInputVec;
     #endregion
+
+    public GameObject EntityCamera;
 
     public EntityCore()
     {
@@ -38,8 +41,34 @@ public class EntityCore : MonoBehaviour
     }
     #endregion
 
-    // Update is called once per frame
-    void Update()
+    public override void NetworkStart()
+    {
+        if (IsLocalPlayer)
+        {
+            Debug.Log("Local player has been set. Initializing GUI.");
+            PlayerManager.Singleton.LocalPlayer = gameObject;
+
+            InventoryManager.Singleton.InventoryUI.Init();
+            InventoryManager.Singleton.HotbarUI.Init();
+
+            PlayerManager.Singleton.PlayerUI.SetActive(true);
+        } 
+        else
+        {
+            // Disable camera
+            EntityCamera.SetActive(false);
+            Debug.Log($"Camera for this player {OwnerClientId} has been disabled.");
+
+            // Disable player input
+            GetComponent<PlayerInput>().enabled = false;
+        }
+
+        // Add this player to local list
+        PlayerManager.Singleton.PlayerList.Add(NetworkedObject);
+        Debug.Log($"Adding player {NetworkedObject.OwnerClientId} to the player list");
+    }
+
+    private void OnDestroy()
     {
         
     }
