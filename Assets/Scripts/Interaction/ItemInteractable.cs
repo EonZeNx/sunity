@@ -1,3 +1,5 @@
+using MLAPI;
+using MLAPI.Messaging;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +11,20 @@ public class ItemInteractable : Interactable
 
     public ItemInteractable(): base() { }
 
-    public override void Interact(CharacterInventoryAndInteraction characterInventory)
+    [ServerRPC(RequireOwnership = false)]
+    public override void Interact(EntityInteraction entityInteraction)
     {
-        var overflow = characterInventory.PickupItemStack(new ItemStack(ItemId, Quantity));
+        var playerInventory = entityInteraction.GetComponent<EntityInventory>();
+        if(playerInventory == null)
+        {
+            return;
+        }
+
+        var overflow = playerInventory.PickupItemStack(new ItemStack(ItemId, Quantity));
         if (overflow.IsEmpty())
         {
             Destroy(gameObject);
+            NetworkedObject.UnSpawn();
         } else
         {
             ItemId = overflow.ItemId;

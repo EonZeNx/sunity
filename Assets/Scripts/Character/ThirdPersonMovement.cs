@@ -1,3 +1,4 @@
+using MLAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThirdPersonMovement : MonoBehaviour
+public class ThirdPersonMovement : NetworkedBehaviour
 {
     // TODO: Figure out Unity and/or C# comment system and describe wtf is going on here
     // TODO: Implement update/fix for Cinemachine for good 3PC
@@ -106,10 +107,6 @@ public class ThirdPersonMovement : MonoBehaviour
         
         // // x then z due to Unity's different coord layout
         float rotTargetAngle = Mathf.Atan2(LastMoveInput.x, LastMoveInput.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        // float rotActualAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotTargetAngle,
-        //     ref _rotSmoothVel, rotSmoothTime);
-        // transform.rotation = Quaternion.Euler(0f, rotActualAngle, 0f);
-
         Vector3 moveDirection = Quaternion.Euler(0f, rotTargetAngle, 0f) * Vector3.forward;
         controller.Move(MoveSpeed * Time.deltaTime * moveDirection.normalized);
     }

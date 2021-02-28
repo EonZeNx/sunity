@@ -1,9 +1,10 @@
+using MLAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class IndependentBodyRotation : MonoBehaviour
+public class IndependentBodyRotation : NetworkedBehaviour
 {
     /// <summary>
     /// References to the independently rotating parts
@@ -36,13 +37,14 @@ public class IndependentBodyRotation : MonoBehaviour
     private float _smoothVelUpperBody;
     private float _smoothVelLowerBody;
     
-    public void OnAim(InputValue value)
+    public void OnAimInput(InputValue value)
     {
         // Follow camera
         isAiming = value.Get<float>() > 0.5;
         if (isAiming)
         {
             wasAiming = true;
+            timeSinceLastAim = 0f;
         }
     }
 
