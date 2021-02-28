@@ -1,10 +1,17 @@
-using MLAPI;
+﻿using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.NetworkedVar;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public enum HotbarItemStackActionType
+{
+    Throw, // throw an item on the floor
+    Primary, // primary action e.g. shooting a gun
+    Secondary // secondary action e.g. aiming a gun
+} 
 
 /// <summary>
 /// CharacterInventoryAndInteraction handles:
@@ -17,14 +24,17 @@ public class EntityInventory : NetworkedBehaviour
 
     [Header("References")]
     private readonly NetworkedVar<Inventory> MainInventory = new NetworkedVar<Inventory>(
-        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone }, 
+        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone },
         new Inventory(4, 10));
     private readonly NetworkedVar<Inventory> HotbarInventory = new NetworkedVar<Inventory>(
         new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone },
         new Inventory(1, 10));
     private readonly NetworkedVar<ItemStack> MouseSlot = new NetworkedVar<ItemStack>(
-        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone }, 
+        new NetworkedVarSettings { WritePermission = NetworkedVarPermission.Everyone },
         new ItemStack(InventoryManager.NULL_ITEM_ID, 0));
+
+    [Header("Prefabs")]
+    public GameObject itemInteractable;
 
     #endregion
 
@@ -39,22 +49,37 @@ public class EntityInventory : NetworkedBehaviour
     {
         InventoryManager.Singleton.InventoryUI.ToggleInventory();
     }
-    
+
+    /// <summary>
+    /// Player presses throw key. Will throw out one of selected item stack.
+    /// </summary>
+    /// <param name="inputValue"></param>
+    public void OnThrow(InputValue inputValue)
+    {
+        if (inputValue.Get<float>() <= 0.1f)
+        {
+            return;
+        }
+        if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
+        {
+            PerformSelectedItemStackAction(HotbarItemStackActionType.Throw);
+        }
+    }
+
     /// <summary>
     /// Player presses Primary Action key.
     /// Performs primary action on selected hotbar item.
     /// </summary>
-    /// <param name="input"></param>
-    public void OnPrimaryAction(InputValue _)
+    /// <param name="inputValue"></param>
+    public void OnPrimaryAction(InputValue inputValue)
     {
+        if (inputValue.Get<float>() <= 0.1f)
+        {
+            return;
+        }
         if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
         {
-            var itemStack = InventoryManager.Singleton.HotbarUI.GetSelectedItemStack();
-            var newStack = itemStack.GetItemDefinition().OnUsePrimary(itemStack, this);
-            if (newStack != null)
-            {
-                InventoryManager.Singleton.HotbarUI.SetSelectedItemStack(newStack);
-            }
+            PerformSelectedItemStackAction(HotbarItemStackActionType.Primary);
         }
     }
 
@@ -62,17 +87,16 @@ public class EntityInventory : NetworkedBehaviour
     /// Player presses Secondary Action key.
     /// Performs secondary action on selected hotbar item.
     /// </summary>
-    /// <param name="input"></param>
-    public void OnSecondaryAction(InputValue _)
+    /// <param name="inputValue"></param>
+    public void OnSecondaryAction(InputValue inputValue)
     {
+        if (inputValue.Get<float>() <= 0.1f)
+        {
+            return;
+        }
         if (!InventoryManager.Singleton.InventoryUI.mainInventoryOpen)
         {
-            var itemStack = InventoryManager.Singleton.HotbarUI.GetSelectedItemStack();
-            var newStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
-            if (newStack != null)
-            {
-                InventoryManager.Singleton.HotbarUI.SetSelectedItemStack(newStack);
-            }
+            PerformSelectedItemStackAction(HotbarItemStackActionType.Secondary);
         }
     }
 
@@ -92,6 +116,39 @@ public class EntityInventory : NetworkedBehaviour
         {
             InventoryManager.Singleton.HotbarUI.NavigateToRight();
         }
+    }
+
+    #endregion
+
+    #region External Actions
+
+    /// <summary>
+    /// Player performs an action on a selected item.
+    /// </summary>
+    /// <param name="actionType"></param>
+    [ServerRPC]
+    public void PerformSelectedItemStackAction(HotbarItemStackActionType actionType)
+    {
+        var itemStack = InventoryManager.Singleton.HotbarUI.GetSelectedItemStack();
+        switch (actionType)
+        {
+            case HotbarItemStackActionType.Primary:
+                itemStack = itemStack.GetItemDefinition().OnUsePrimary(itemStack, this);
+                break;
+            case HotbarItemStackActionType.Secondary:
+                itemStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
+                break;
+            case HotbarItemStackActionType.Throw:
+                
+                break;
+        }
+        
+        if (itemStack != null)
+        {
+            InventoryManager.Singleton.HotbarUI.SetSelectedItemStack(itemStack);
+        }
+
+        MarkAllInventoriesAsDirty();
     }
 
     #endregion
@@ -125,12 +182,21 @@ public class EntityInventory : NetworkedBehaviour
         Debug.Log($"Attempting to insert {stack} into Player {OwnerClientId}'s inventory.");
         var overflow = HotbarInventory.Value.InsertItemStackIntoInventory(stack);
         overflow = MainInventory.Value.InsertItemStackIntoInventory(overflow);
-        
+
+        MarkAllInventoriesAsDirty();
+
+        return overflow;
+    }
+
+    #endregion
+
+    #region Networking
+
+    public void MarkAllInventoriesAsDirty()
+    {
         HotbarInventory.isDirty = true;
         MainInventory.isDirty = true;
         MouseSlot.isDirty = true;
-        
-        return overflow;
     }
 
     #endregion
