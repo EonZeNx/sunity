@@ -59,7 +59,7 @@ namespace AdvancedMovement
         // Deceleration of character while braking under this movement struct.
         public float brakingDeceleration;
 
-        public GMoveStruct(float friction = 8f, float acceleration = 2048f, float maxSpeed = 50f, float brakingFriction = 8f, float brakingDeceleration = 2048f)
+        public GMoveStruct(float friction = 1f, float acceleration = 8f, float maxSpeed = 16f, float brakingFriction = 1f, float brakingDeceleration = 8f)
         {
             this.friction = friction;
             this.acceleration = acceleration;
