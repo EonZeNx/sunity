@@ -84,7 +84,9 @@ public class MovementCore : MonoBehaviour
 	public void MovementComponent()
 	{
 		// References
-		physics = GetComponent<Rigidbody>();
+		physics ??= GetComponent<Rigidbody>();
+		physics.interpolation = RigidbodyInterpolation.Interpolate;
+		physics.freezeRotation = true;
 		
 		// Movement
 		// // Jumping
