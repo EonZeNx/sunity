@@ -53,30 +53,37 @@ public class InventoryManager : MonoBehaviour
 
     #region Item and Inventory
 
+    /// <summary>
+    /// Load all item sprites and prefabs into memory.
+    /// </summary>
     void InitItemAndInventory()
     {
-        var ItemSprites = Resources.LoadAll<Sprite>("Sprites/items");
+        var ItemSprites = Resources.LoadAll<Sprite>("Item/Sprite/items");
+        var ItemPrefabs = Resources.LoadAll<GameObject>("Item/Prefab/");
 
         ItemDefinitions.Add(new Item(
             "null",
             "Null",
             "Used to represent empty space.",
             0,
-            ItemSprites.Single(sprite => sprite.name == "null")
+            ItemSprites.SingleOrDefault(sprite => sprite.name == "null"),
+            ItemPrefabs.SingleOrDefault(prefab => prefab.name == "null")
             ));
         ItemDefinitions.Add(new Item(
             "knife", 
             "Hunting Knife", 
             "A sharp blade used for hunting and utility.", 
             1,
-            ItemSprites.Single(sprite => sprite.name == "knife")
+            ItemSprites.SingleOrDefault(sprite => sprite.name == "knife"),
+            ItemPrefabs.SingleOrDefault(prefab => prefab.name == "knife")
             ));
         ItemDefinitions.Add(new HealingItem(
             "bandage", 
             "Bandage", 
             "Bandages will give a small HP revovery.", 
             20,
-            ItemSprites.Single(sprite => sprite.name == "bandage")
+            ItemSprites.SingleOrDefault(sprite => sprite.name == "bandage"),
+            ItemPrefabs.SingleOrDefault(prefab => prefab.name == "bandage")
             ));
     }
 

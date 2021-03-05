@@ -31,6 +31,9 @@ public class EntityInteraction : NetworkedBehaviour
                 if (interactable != null)
                 {
                     InteractableInRange = interactable;
+                } else
+                {
+                    InteractableInRange = null;
                 }
             }
             else
