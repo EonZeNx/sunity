@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using MLAPI;
 
 /// <summary>
 /// Item represents the definition of an item. This is where properties such as item name, item description, and item max stack size are found.
@@ -11,7 +12,7 @@ using System.Linq;
 public class Item
 {
     public static readonly float DEFAULT_THROW_STRENGTH = 10f;
-    public static readonly float DEFAULT_START_DISTANCE = 2f;
+    public static readonly float DEFAULT_START_DISTANCE = 1f;
 
     #region Fields and Constructor
 
@@ -78,6 +79,7 @@ public class Item
             itemInteractable.transform.position = character.transform.position + character.transform.forward * DEFAULT_START_DISTANCE;
             itemInteractable.transform.rotation = character.transform.rotation;
 
+            itemInteractable.GetComponent<NetworkedObject>().Spawn();
             // Add force to make item go forward
             var initialForce = character.transform.forward * DEFAULT_THROW_STRENGTH;
             itemInteractable.GetComponent<Rigidbody>().AddForce(initialForce, ForceMode.Impulse);
