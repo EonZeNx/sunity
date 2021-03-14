@@ -143,7 +143,7 @@ public class EntityInventory : NetworkedBehaviour
                 itemStack = itemStack.GetItemDefinition().OnUseSecondary(itemStack, this);
                 break;
             case HotbarItemStackActionType.Throw:
-                
+                itemStack = itemStack.GetItemDefinition().OnThrow(itemStack, this);
                 break;
         }
         

@@ -5,7 +5,7 @@
 /// </summary>
 public class HealingItem : Item
 {
-    public HealingItem(string Id, string Name, string Description, int MaxStackSize, Sprite Sprite) : base(Id, Name, Description, MaxStackSize, Sprite)
+    public HealingItem(string Id, string Name, string Description, int MaxStackSize, Sprite Sprite, GameObject InteractablePrefab) : base(Id, Name, Description, MaxStackSize, Sprite, InteractablePrefab)
     { }
     
     /// <summary>

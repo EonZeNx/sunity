@@ -30,17 +30,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "PrimaryAction",
-                    "type": "Button",
-                    "id": "b73b6853-504d-412b-8f9d-4062d8465ded",
-                    "expectedControlType": "Button",
+                    "name": "HotbarScroll",
+                    "type": "Value",
+                    "id": "6c0a66a2-c25a-4f6f-88a3-e0c44dc28de6",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "SecondaryAction",
+                    "name": "Sprint",
                     "type": "Value",
-                    "id": "1436ec9a-d7b7-49fa-a95f-abd5c93f6364",
+                    "id": "74e9d9aa-71a9-498d-b121-42b78d8e208e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -54,6 +54,22 @@
                     "interactions": ""
                 },
                 {
+                    "name": "PrimaryAction",
+                    "type": "Button",
+                    "id": "b73b6853-504d-412b-8f9d-4062d8465ded",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SecondaryAction",
+                    "type": "Button",
+                    "id": "1436ec9a-d7b7-49fa-a95f-abd5c93f6364",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Inventory",
                     "type": "Button",
                     "id": "a4fae6af-13c7-435b-937b-ffb170e80459",
@@ -62,17 +78,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "HotbarScroll",
-                    "type": "Value",
-                    "id": "6c0a66a2-c25a-4f6f-88a3-e0c44dc28de6",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Sprint",
-                    "type": "Value",
-                    "id": "74e9d9aa-71a9-498d-b121-42b78d8e208e",
+                    "name": "Throw",
+                    "type": "Button",
+                    "id": "0a01684b-ab56-4b41-bc8c-1fb3992272b5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -202,78 +210,12 @@
                 },
                 {
                     "name": "",
-                    "id": "985df79b-f82b-467d-9d46-428d52ec695b",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "SecondaryAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5cf71795-1c2d-4717-96e1-997ebaf4bb7e",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SecondaryAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6d2e9b78-52e4-4302-932d-9014ce84caf6",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "20a8f6ad-7f52-4e37-8127-1b2c500f0b94",
                     "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "HotbarScroll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "af58faba-a5f6-45f8-a817-f3778b5c566c",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "PrimaryAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5f5cba26-6ce4-44ab-a315-00164a500229",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "PrimaryAction",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4481a9f9-7b0f-4d48-8c99-d51cd2e1a80d",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -307,6 +249,83 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35934347-64a6-48b9-9199-f0f101ed7294",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d2e9b78-52e4-4302-932d-9014ce84caf6",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4481a9f9-7b0f-4d48-8c99-d51cd2e1a80d",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af58faba-a5f6-45f8-a817-f3778b5c566c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "PrimaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f5cba26-6ce4-44ab-a315-00164a500229",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PrimaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "985df79b-f82b-467d-9d46-428d52ec695b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SecondaryAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cf71795-1c2d-4717-96e1-997ebaf4bb7e",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
