@@ -42,15 +42,6 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject LocalPlayer { get; set; }
 
-    public EntityInventory LocalPlayerInventory
-    {
-        get
-        {
-            var player = LocalPlayer;
-            return player.GetComponent<EntityInventory>();
-        }
-    }
-
     #endregion
 
     #region Unity Lifecycle Methods

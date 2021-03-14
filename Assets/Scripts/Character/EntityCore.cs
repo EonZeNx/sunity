@@ -47,10 +47,6 @@ public class EntityCore : NetworkedBehaviour
         {
             Debug.Log("Local player has been set. Initializing GUI.");
             PlayerManager.Singleton.LocalPlayer = gameObject;
-
-            InventoryManager.Singleton.InventoryUI.Init();
-            InventoryManager.Singleton.HotbarUI.Init();
-
             PlayerManager.Singleton.PlayerUI.SetActive(true);
         } 
         else
