@@ -23,7 +23,7 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "84ea89a3-a754-4b25-a325-ac07cb277232",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -73,7 +73,15 @@
                     "name": "Sprint",
                     "type": "Value",
                     "id": "74e9d9aa-71a9-498d-b121-42b78d8e208e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Value",
+                    "id": "dbab38cb-4988-404f-a16a-1968a205d8ab",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -307,6 +315,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f8bda96-9995-46cb-809d-c69c49c56be2",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e08eeafb-783b-47b1-9f56-1eab8aa6e9a1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
