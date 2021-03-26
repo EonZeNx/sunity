@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/DebugMap.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Blockout_Debug.unity
+    guid: 70bf661317b9c364aaa74a0f8ec81525
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 96fcf32cae3dbcc42a2af10131f52c8b, type: 2}

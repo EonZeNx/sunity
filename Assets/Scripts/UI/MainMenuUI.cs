@@ -27,8 +27,8 @@ public class MainMenuUI : MonoBehaviour
                 port = int.Parse(HostPortText.text);
             }
 
-            var networkManager = NetworkingManager.Singleton;
-            var networkTransport = NetworkingManager.Singleton.GetComponent<UnetTransport>();
+            var networkManager = NetworkManager.Singleton;
+            var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
 
             networkTransport.ServerListenPort = port;
 
@@ -56,8 +56,8 @@ public class MainMenuUI : MonoBehaviour
                 port = int.Parse(JoinPortText.text);
             }
 
-            var networkManager = NetworkingManager.Singleton;
-            var networkTransport = NetworkingManager.Singleton.GetComponent<UnetTransport>();
+            var networkManager = NetworkManager.Singleton;
+            var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
 
             networkTransport.ConnectAddress = ip;
             networkTransport.ConnectPort = port;

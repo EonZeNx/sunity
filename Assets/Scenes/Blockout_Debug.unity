@@ -267,38 +267,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: LogLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.PlayerPrefabHash.Value
-      value: 4894279319656674168
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.data[0].Prefab
-      value: 
-      objectReference: {fileID: 5099013233107438874, guid: 31a5d7a0e63f30e4a9281829adb41b8b, type: 3}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.data[1].Prefab
-      value: 
-      objectReference: {fileID: 7027033343857464089, guid: 20b6b809309b5754fb8755ebbc9e93f3, type: 3}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.data[2].Prefab
-      value: 
-      objectReference: {fileID: 7459811434122827805, guid: 3ef55aa05c4571b4995ac71205f425a5, type: 3}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.data[0].PlayerPrefab
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6943448588913833410, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
-      propertyPath: NetworkConfig.NetworkedPrefabs.Array.data[1].PlayerPrefab
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6943448588913833411, guid: e03928fc27ce33f4f80089be227c5b83, type: 3}
       propertyPath: m_Name
       value: NetworkManager

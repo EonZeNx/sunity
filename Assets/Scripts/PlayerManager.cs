@@ -34,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 
     #region All Player Info
 
-    public List<NetworkedObject> PlayerList { get; set; }
+    public List<NetworkObject> PlayerList { get; set; }
 
     #endregion
 
@@ -49,7 +49,7 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerList = new List<NetworkedObject>();
+        PlayerList = new List<NetworkObject>();
     }
 
     // Update is called once per frame

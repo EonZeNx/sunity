@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class IndependentBodyRotation : NetworkedBehaviour
+public class IndependentBodyRotation : NetworkBehaviour
 {
     /// <summary>
     /// References to the independently rotating parts

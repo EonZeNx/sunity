@@ -5,7 +5,7 @@ using MLAPI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EntityCore : NetworkedBehaviour
+public class EntityCore : NetworkBehaviour
 {
     #region Variables
     [Header("External References")]
@@ -60,8 +60,8 @@ public class EntityCore : NetworkedBehaviour
         }
 
         // Add this player to local list
-        PlayerManager.Singleton.PlayerList.Add(NetworkedObject);
-        Debug.Log($"Adding player {NetworkedObject.OwnerClientId} to the player list");
+        PlayerManager.Singleton.PlayerList.Add(NetworkObject);
+        Debug.Log($"Adding player {NetworkObject.OwnerClientId} to the player list");
     }
 
     private void OnDestroy()

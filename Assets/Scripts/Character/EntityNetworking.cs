@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// In charge of determining behaviour when connecting, disconnecting, etc.
 /// </summary>
-public class EntityNetworking : NetworkedBehaviour
+public class EntityNetworking : NetworkBehaviour
 {
     public GameObject EntityCamera;
 
@@ -30,8 +30,8 @@ public class EntityNetworking : NetworkedBehaviour
         }
 
         // Add this player to local list
-        PlayerManager.Singleton.PlayerList.Add(NetworkedObject);
-        Debug.Log($"Adding player {NetworkedObject.OwnerClientId} to the player list");
+        PlayerManager.Singleton.PlayerList.Add(NetworkObject);
+        Debug.Log($"Adding player {NetworkObject.OwnerClientId} to the player list");
     }
 
 

@@ -8,7 +8,7 @@ using UnityEngine.Assertions.Must;
 
 namespace Character
 {
-    public class MovementComponent : NetworkedBehaviour
+    public class MovementComponent : NetworkBehaviour
     {
         #region Structs
         [System.Serializable]
