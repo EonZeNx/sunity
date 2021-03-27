@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerNameUI : MonoBehaviour
+namespace Sunity.Game.UI.Multiplayer
 {
-    public Text playerNameText;
+    public class PlayerNameUI : MonoBehaviour
+    {
+        public Text playerNameText;
+    }
 }

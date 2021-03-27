@@ -6,68 +6,73 @@ using MLAPI;
 using MLAPI.Transports.UNET;
 using System;
 
-public class MainMenuUI : MonoBehaviour
+namespace Sunity.Game.UI
 {
-    public Text ErrorText;
-
-    public Text HostPortText;
-
-    public Text JoinIpText;
-    public Text JoinPortText;
-
-    public GameObject GameUI;
-
-    public void Host()
+    public class MainMenuUI : MonoBehaviour
     {
-        try
+        public Text ErrorText;
+
+        public Text HostPortText;
+
+        public Text JoinIpText;
+        public Text JoinPortText;
+
+        public GameObject GameUI;
+
+        public void Host()
         {
-            var port = 7777;
-            if (HostPortText.text != "")
+            try
             {
-                port = int.Parse(HostPortText.text);
+                var port = 7777;
+                if (HostPortText.text != "")
+                {
+                    port = int.Parse(HostPortText.text);
+                }
+
+                var networkManager = NetworkManager.Singleton;
+                var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
+
+                networkTransport.ServerListenPort = port;
+
+                networkManager.StartHost();
+
+                gameObject.SetActive(false);
             }
-
-            var networkManager = NetworkManager.Singleton;
-            var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
-
-            networkTransport.ServerListenPort = port;
-
-            networkManager.StartHost();
-
-            gameObject.SetActive(false);
-        } catch (Exception)
-        {
-            ErrorText.text = "An error has occured.";
+            catch (Exception)
+            {
+                ErrorText.text = "An error has occured.";
+            }
         }
-    }
 
-    public void Join()
-    {
-        try
+        public void Join()
         {
-            var ip = "127.0.0.1";
-            var port = 7777;
-            if(JoinIpText.text != "")
+            try
             {
-                ip = JoinIpText.text;
+                var ip = "127.0.0.1";
+                var port = 7777;
+                if (JoinIpText.text != "")
+                {
+                    ip = JoinIpText.text;
+                }
+                if (JoinPortText.text != "")
+                {
+                    port = int.Parse(JoinPortText.text);
+                }
+
+                var networkManager = NetworkManager.Singleton;
+                var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
+
+                networkTransport.ConnectAddress = ip;
+                networkTransport.ConnectPort = port;
+
+                networkManager.StartClient();
+
+                gameObject.SetActive(false);
             }
-            if(JoinPortText.text != "")
+            catch (Exception)
             {
-                port = int.Parse(JoinPortText.text);
+                ErrorText.text = "An error has occured.";
             }
-
-            var networkManager = NetworkManager.Singleton;
-            var networkTransport = NetworkManager.Singleton.GetComponent<UNetTransport>();
-
-            networkTransport.ConnectAddress = ip;
-            networkTransport.ConnectPort = port;
-
-            networkManager.StartClient();
-
-            gameObject.SetActive(false);
-        } catch (Exception)
-        {
-            ErrorText.text = "An error has occured.";
         }
     }
 }

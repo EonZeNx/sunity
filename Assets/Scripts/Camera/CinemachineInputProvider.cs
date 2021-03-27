@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 
-namespace Cinemachine
+namespace Sunity.Game.Camera
 {
     public class CinemachineInputProvider : MonoBehaviour, AxisState.IInputAxisProvider
     {

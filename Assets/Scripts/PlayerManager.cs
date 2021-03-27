@@ -4,59 +4,62 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+namespace Sunity.Game
 {
-    #region Singleton
-
-    private static PlayerManager _singleton;
-
-    public static PlayerManager Singleton { get { return _singleton; } }
-
-    private void Awake()
+    public class PlayerManager : MonoBehaviour
     {
-        if (_singleton != null && _singleton != this)
+        #region Singleton
+
+        private static PlayerManager _singleton;
+
+        public static PlayerManager Singleton { get { return _singleton; } }
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
+            if (_singleton != null && _singleton != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _singleton = this;
+            }
         }
-        else
+
+        #endregion
+
+        #region UI
+
+        public GameObject PlayerUI;
+
+        #endregion
+
+        #region All Player Info
+
+        public List<NetworkObject> PlayerList { get; set; }
+
+        #endregion
+
+        #region Local Player Details
+
+        public GameObject LocalPlayer { get; set; }
+
+        #endregion
+
+        #region Unity Lifecycle Methods
+
+        // Start is called before the first frame update
+        void Start()
         {
-            _singleton = this;
+            PlayerList = new List<NetworkObject>();
         }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region UI
-
-    public GameObject PlayerUI;
-
-    #endregion
-
-    #region All Player Info
-
-    public List<NetworkObject> PlayerList { get; set; }
-
-    #endregion
-
-    #region Local Player Details
-
-    public GameObject LocalPlayer { get; set; }
-
-    #endregion
-
-    #region Unity Lifecycle Methods
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        PlayerList = new List<NetworkObject>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    #endregion
 }

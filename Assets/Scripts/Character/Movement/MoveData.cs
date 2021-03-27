@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MoveData
+namespace Sunity.Game.Character.Movement
 {
     #region Structs
 
