@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sunity.Inventory
 {
-    public class Item
+    /// <summary>
+    /// Item definition class.
+    /// </summary>
+    [CreateAssetMenu(fileName = "Item", menuName = "Inventory/Item")]
+    [System.Serializable]
+    public class Item : ScriptableObject
     {
-        public Item()
-        {
+        public string displayName;
+        public string description;
 
-        }
+        public Sprite sprite;
+        public GameObject model;
     }
 }
