@@ -6,29 +6,20 @@ using UnityEngine;
 namespace Sunity.Inventory.Assets.Scripts.Sunity.Inventory
 {
     /// <summary>
-    /// Singleton class that allows registering and retrieval of items.
+    /// Class that holds an immutable list of item definitions.
     /// </summary>
+    [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/ItemDatabase")]
     public class ItemDatabase : ScriptableObject
     {
-        private ICollection<Item> Items { get; set; }
-
-        public ItemDatabase()
-        {
-            Items = LoadItemsFromResources();
-            Debug.Log(Items.First());
-        }
-
-        public ICollection<Item> LoadItemsFromResources()
-        {
-            return Resources.LoadAll<Item>("Items");
-        }
+        [SerializeField]
+        private List<Item> _items;
 
         /// <summary>
-        /// Obtain item with the object name <paramref name="id"/>.
+        /// Obtain item with the object name <paramref name="objectName"/>.
         /// </summary>
-        public Item GetItemById(string id)
+        public Item GetItemById(string objectName)
         {
-            return Items.FirstOrDefault(item => item.name == id);
+            return _items.FirstOrDefault(item => item.name == objectName);
         }
     }
 }

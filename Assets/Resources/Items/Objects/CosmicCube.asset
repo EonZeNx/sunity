@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ad461025b0478944be5193d1f51e202, type: 3}
-  m_Name: defaultcube
+  m_Name: CosmicCube
   m_EditorClassIdentifier: 
-  displayName: Cosmic Cube
-  description: Holds infinite spatial power.
-  sprite: {fileID: 21300000, guid: 0f6b6d0f5217176409a19183bb4434ad, type: 3}
-  model: {fileID: 5563807760123632075, guid: 849ccd9883a99ac489d4eb5dd478defe, type: 3}
+  _displayName: Cosmic Cube
+  _description: Cube that holds seemingly infinite power.
+  _sprite: {fileID: 21300000, guid: 0f6b6d0f5217176409a19183bb4434ad, type: 3}
+  _model: {fileID: 5563807760123632075, guid: 849ccd9883a99ac489d4eb5dd478defe, type: 3}
