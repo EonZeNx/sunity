@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Sunity.Inventory.Assets.Scripts.Sunity.Inventory
+namespace Sunity.Inventory
 {
     /// <summary>
     /// Class that holds an immutable list of item definitions.
@@ -15,11 +15,21 @@ namespace Sunity.Inventory.Assets.Scripts.Sunity.Inventory
         private List<Item> _items;
 
         /// <summary>
-        /// Obtain item with the object name <paramref name="objectName"/>.
+        /// Obtain item by object name <paramref name="id"/>.
+        /// This should be used as the Item Id.
         /// </summary>
-        public Item GetItemById(string objectName)
+        public Item GetItemById(string id)
         {
-            return _items.FirstOrDefault(item => item.name == objectName);
+            return _items.FirstOrDefault(item => item.Id == id);
+        }
+
+        public void LogContents()
+        {
+            _items.ForEach(item => 
+            {
+                Debug.Log(item.Id);
+                Debug.Log(item.DisplayName);
+            });
         }
     }
 }

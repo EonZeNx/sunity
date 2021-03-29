@@ -1,4 +1,5 @@
 using MLAPI;
+using Sunity.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,6 @@ namespace Sunity.Game
         // Start is called before the first frame update
         void Start()
         {
-            PlayerList = new List<NetworkObject>();
         }
 
         // Update is called once per frame

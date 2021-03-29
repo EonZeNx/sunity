@@ -19,6 +19,7 @@ namespace Sunity.Inventory
         [SerializeField]
         private GameObject _model;
 
+        public string Id { get => name; }
         public string DisplayName { get => _displayName; }
         public string Description { get => _description; }
         public Sprite Sprite { get => _sprite; }
