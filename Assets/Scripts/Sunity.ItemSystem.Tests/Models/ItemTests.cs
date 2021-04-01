@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sunity.Inventory.Models;
+using Sunity.ItemSystem.Models;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Sunity.Inventory.Tests
+namespace Sunity.ItemSystem.Tests
 {
     [TestFixture]
     public class ItemTests

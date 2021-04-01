@@ -1,14 +1,14 @@
-﻿using Sunity.Inventory.Models;
+﻿using Sunity.ItemSystem.Models;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Sunity.Inventory
+namespace Sunity.ItemSystem
 {
     /// <summary>
-    /// Class that holds an immutable list of item definitions.
+    /// Class that holds a list of item definitions.
     /// </summary>
     [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/ItemDatabase")]
     public class ItemDatabase : ScriptableObject

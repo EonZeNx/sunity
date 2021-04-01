@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sunity.Inventory.Tests.TestHelpers
+namespace Sunity.ItemSystem.Tests.TestHelpers
 {
     /// <summary>
     /// <see cref="IBasicFixture{T}"/> will allow for setup of a system/class for the purposes of unit testing.

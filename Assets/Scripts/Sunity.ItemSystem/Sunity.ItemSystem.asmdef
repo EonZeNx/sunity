@@ -1,6 +1,6 @@
 {
-    "name": "Sunity.Inventory",
-    "rootNamespace": "Sunity.Inventory",
+    "name": "Sunity.ItemSystem",
+    "rootNamespace": "Sunity.ItemSystem",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

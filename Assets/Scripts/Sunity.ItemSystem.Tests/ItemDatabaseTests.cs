@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Sunity.Inventory;
-using Sunity.Inventory.Models;
-using Sunity.Inventory.Tests.TestHelpers;
+using Sunity.ItemSystem;
+using Sunity.ItemSystem.Models;
+using Sunity.ItemSystem.Tests.TestHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Sunity.Inventory.Tests
+namespace Sunity.ItemSystem.Tests
 {
     [TestFixture]
     public class ItemDatabaseTests

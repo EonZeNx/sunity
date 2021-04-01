@@ -1,10 +1,10 @@
 {
-    "name": "Sunity.Inventory.Tests",
-    "rootNamespace": "Sunity.Inventory.Tests",
+    "name": "Sunity.ItemSystem.Tests",
+    "rootNamespace": "Sunity.ItemSystem.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Sunity.Inventory"
+        "Sunity.ItemSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
