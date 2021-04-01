@@ -10,6 +10,9 @@ namespace Sunity.Inventory.Tests
     [TestFixture]
     public class ItemTests
     {
+        /// <summary>
+        /// The Id should be based on the object/file name of the Item.
+        /// </summary>
         [Test]
         public void GetItemId_Normal_ShouldReturnObjectName()
         {
