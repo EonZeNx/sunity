@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Sunity.Inventory
+namespace Sunity.Inventory.Models
 {
     /// <summary>
     /// Item definition class.

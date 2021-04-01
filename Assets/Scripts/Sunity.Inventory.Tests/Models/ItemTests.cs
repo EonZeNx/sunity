@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Sunity.Inventory.Models;
 using UnityEngine;
 using UnityEngine.TestTools;
 
