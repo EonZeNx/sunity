@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Sunity.Inventory;
 using Sunity.Inventory.Models;
-using Sunity.Inventory.TestHelpers;
+using Sunity.Inventory.Tests.TestHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
