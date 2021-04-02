@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Sunity.ItemSystem.Models;
 using Sunity.ItemSystem.Tests.TestHelpers;
+using System;
 using UnityEngine;
 
 namespace Sunity.ItemSystem.Tests
@@ -12,20 +13,20 @@ namespace Sunity.ItemSystem.Tests
         {
             public Inventory GetSUT()
             {
-                throw new System.NotImplementedException();
+                return new Inventory();
             }
         }
 
         [Test]
-        public void Inventory_Empty_CanStoreItemWithQuantity()
+        public void Inventory_Empty_CanStoreStackableItem()
         {
-
+            throw new NotImplementedException();
         }
 
         [Test]
         public void Inventory_Empty_CanStoreItemWithDimensions()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

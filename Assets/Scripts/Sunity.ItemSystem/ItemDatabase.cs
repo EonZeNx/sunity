@@ -10,8 +10,7 @@ namespace Sunity.ItemSystem
     /// <summary>
     /// Class that holds a list of item definitions.
     /// </summary>
-    [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/ItemDatabase")]
-    public class ItemDatabase : ScriptableObject
+    public class ItemDatabase
     {
         [SerializeField]
         private List<Item> _items;

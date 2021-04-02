@@ -4,25 +4,30 @@ namespace Sunity.ItemSystem.Models
 {
     /// <summary>
     /// Item definition class.
-    /// Identified by object name, when instantiated as a ScriptableObject asset.
     /// </summary>
-    [CreateAssetMenu(fileName = "Item", menuName = "Inventory/Item")]
-    [System.Serializable]
-    public class Item : ScriptableObject
+    public class Item
     {
-        [SerializeField]
-        private string _displayName;
-        [SerializeField]
-        private string _description;
-        [SerializeField]
-        private Sprite _sprite;
-        [SerializeField]
-        private GameObject _model;
+        public string Id { get; private set; }
+        public string DisplayName { get; private set; }
+        public string Description { get; private set; }
+        public Sprite Sprite { get; private set; }
+        public GameObject Model { get; private set; }
 
-        public string Id { get => name; }
-        public string DisplayName { get => _displayName; }
-        public string Description { get => _description; }
-        public Sprite Sprite { get => _sprite; }
-        public GameObject Model { get => _model; }
+        /// <summary>
+        /// Specify all properties explicitly.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="sprite"></param>
+        /// <param name="model"></param>
+        public Item(string id, string displayName, string description, Sprite sprite, GameObject model)
+        {
+            Id = id;
+            DisplayName = displayName;
+            Description = description;
+            Sprite = sprite;
+            Model = model;
+        }
     }
 }

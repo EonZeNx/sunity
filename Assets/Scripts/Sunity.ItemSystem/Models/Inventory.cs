@@ -8,5 +8,6 @@ namespace Sunity.ItemSystem.Models
 {
     public class Inventory
     {
+
     }
 }
