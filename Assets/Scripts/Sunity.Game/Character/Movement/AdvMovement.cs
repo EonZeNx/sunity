@@ -13,8 +13,12 @@ namespace Sunity.Game.Character.Movement
 
         #region References
 
-        [SerializeField] private CharacterController controller;
-        [SerializeField] private Transform aimTransform;
+        [Header("References")]
+        [SerializeField]
+        private CharacterController controller;
+        [SerializeField]
+        private Transform aimTransform;
+        private AbilityComponent _abilityMoveComponent;
 
         #endregion
 
@@ -48,9 +52,13 @@ namespace Sunity.Game.Character.Movement
         private int _cJumps;
         public bool pendingJump;
 
+        #region Bunnyhop variables
+
         private float _bHopTimeBuffer = -1f;
         private float _bHopTimeWindow = 0.05f;
         private Vector3 _bHopVelocity;
+
+        #endregion
 
         #region Movement Config
 
@@ -83,6 +91,14 @@ namespace Sunity.Game.Character.Movement
 
         #endregion
 
+        #region Movement ability variables
+
+        [Header("Movement ability variables")]
+        [SerializeField]
+        private EAbilities abilityType = EAbilities.Boost;
+
+        #endregion
+
         #endregion
 
         #region Forces
@@ -91,11 +107,16 @@ namespace Sunity.Game.Character.Movement
         private float _yForce;
 
         public float XZSpeed => _xzForce.magnitude;
-
+        public float YSpeed => _yForce;
         public Vector3 XZForce3
         {
             get { return new Vector3(_xzForce.x, 0f, _xzForce.y); }
             set { _xzForce = new Vector2(value.x, value.z); }
+        }
+        public Vector3 XYZForce3
+        {
+            get { return new Vector3(_xzForce.x, _yForce, _xzForce.y); }
+            set { _xzForce = new Vector2(value.x, value.z); _yForce = value.y; }
         }
 
         #endregion
@@ -217,6 +238,21 @@ namespace Sunity.Game.Character.Movement
                     if (_cGMoveEnum == GMoveEnum.Crouching) EndCrouch();
                     else StartCrouch();
                 }
+            }
+        }
+
+        private void OnMovementAbility(InputValue value)
+        {
+            float moveAbilityValue = value.Get<float>();
+            bool pressed = moveAbilityValue > 0.5f;
+            
+            if (pressed)
+            {
+                _abilityMoveComponent.UseAbility();
+            }
+            else
+            {
+                _abilityMoveComponent.EndAbility();
             }
         }
 
@@ -403,6 +439,26 @@ namespace Sunity.Game.Character.Movement
 
         #endregion
 
+        #region Movement Ability
+
+        private void UpdateMovementAbility(EAbilities newState)
+        {
+            // Remove current ability movement component.
+            if (abilityType == EAbilities.Grapple) Destroy(GetComponent<GrappleComponent>());
+            else if (abilityType == EAbilities.Boost) Destroy(GetComponent<BoostComponent>());
+            else throw new NullReferenceException();
+
+            abilityType = newState;
+            // Add new ability movement component.
+            if (abilityType == EAbilities.Grapple) _abilityMoveComponent = gameObject.AddComponent<GrappleComponent>();
+            else if (abilityType == EAbilities.Boost) _abilityMoveComponent = gameObject.AddComponent<BoostComponent>();
+            else throw new NullReferenceException();
+
+            _abilityMoveComponent.LateConstructor(this);
+        }
+
+        #endregion
+
         #endregion
 
         #region Checks
@@ -477,6 +533,8 @@ namespace Sunity.Game.Character.Movement
             _cFMoveStruct = defaultFMoveStruct;
 
             _cSlideMoveStruct = defaultSlideMoveStruct;
+            
+            UpdateMovementAbility(EAbilities.Boost);
         }
 
         // Update is called once per frame

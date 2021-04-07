@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ad461025b0478944be5193d1f51e202, type: 3}
-  m_Name: cosmiccube
+  m_Name: CosmicCube
   m_EditorClassIdentifier: 
   _displayName: Cosmic Cube
   _description: Cube that holds seemingly infinite power.
