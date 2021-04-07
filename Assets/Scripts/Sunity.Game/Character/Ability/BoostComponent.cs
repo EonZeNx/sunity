@@ -49,6 +49,7 @@ namespace Sunity.Game
             usingAbility = true;
             UseCharge();
 
+            // TODO: Add to forces queue to prevent race condition.
             Vector3 velocityDirection = advMovement.XYZForce3.normalized;
             Vector3 boostVelocity = velocityDirection * boostSpeed;
             advMovement.XYZForce3 += boostVelocity;
