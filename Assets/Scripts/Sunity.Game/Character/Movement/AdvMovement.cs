@@ -119,6 +119,8 @@ namespace Sunity.Game.Character.Movement
             set { _xzForce = new Vector2(value.x, value.z); _yForce = value.y; }
         }
 
+        private List<Vector3> pendingLaunches = new List<Vector3>();
+
         #endregion
 
         #endregion
@@ -439,6 +441,29 @@ namespace Sunity.Game.Character.Movement
 
         #endregion
 
+        #region Launch
+
+        public void AddPendingLaunch(Vector3 launch)
+        {
+            pendingLaunches.Add(launch);
+        }
+
+        public void ApplyLaunches()
+        {
+            if (pendingLaunches.Count > 0)
+            {
+                foreach (Vector3 launch in pendingLaunches)
+                {
+                    _xzForce += new Vector2(launch.x, launch.z);
+                    _yForce += launch.y;
+                }
+
+                pendingLaunches = new List<Vector3>();
+            }
+        }
+
+        #endregion
+        
         #region Movement Ability
 
         private void UpdateMovementAbility(EAbilities newState)
@@ -534,7 +559,7 @@ namespace Sunity.Game.Character.Movement
 
             _cSlideMoveStruct = defaultSlideMoveStruct;
             
-            UpdateMovementAbility(EAbilities.Boost);
+            UpdateMovementAbility(abilityType);
         }
 
         // Update is called once per frame
@@ -543,6 +568,8 @@ namespace Sunity.Game.Character.Movement
             Movement();
 
             GroundCheck();
+
+            ApplyLaunches();
         }
 
         private void LateUpdate()

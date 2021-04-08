@@ -51,8 +51,11 @@ namespace Sunity.Game
             canUseAbility = true;
             
             baseCharges = 3;
-            baseCooldown = 6f;
+            baseCooldown = 5f;
             usingAbility = false;
+            
+            charges = baseCharges;
+            cooldown = 0f;
             
             // Grapple properties
             range = 10f;
@@ -63,10 +66,11 @@ namespace Sunity.Game
 
         public override void UseAbility()
         {
-            if (!canUseAbility) return;
+            if (!canUseAbility || usingAbility || charges <= 0) return;
             
             usingAbility = true;
-            isShootingGrapple = true;
+            UseCharge();
+            StartCooldown();
 
             RaycastHit hit;
             bool didHit = Physics.Raycast(worldGrappleStart, aimTransform.forward, out hit, range);
@@ -114,14 +118,8 @@ namespace Sunity.Game
                 if (cooldown < MathUtils.FLOAT_ZERO)
                 {
                     GiveCharge();
-                    if (UsedCharges == 0)
-                    {
-                        cooldown = 0f;
-                    }
-                    else
-                    {
-                        StartCooldown();
-                    }
+                    if (UsedCharges == 0) cooldown = 0f;
+                    else StartCooldown();
                 }
             }
         }

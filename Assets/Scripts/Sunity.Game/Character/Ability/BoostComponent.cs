@@ -35,8 +35,11 @@ namespace Sunity.Game
             canUseAbility = true;
             
             baseCharges = 3;
-            baseCooldown = 6f;
+            baseCooldown = 5f;
             usingAbility = false;
+
+            charges = baseCharges;
+            cooldown = 0f;
             
             // Boost properties
             boostSpeed = 7f;
@@ -44,15 +47,15 @@ namespace Sunity.Game
 
         public override void UseAbility()
         {
-            if (!canUseAbility || usingAbility) return;
+            if (!canUseAbility || usingAbility || charges <= 0) return;
             
             usingAbility = true;
             UseCharge();
+            StartCooldown();
 
-            // TODO: Add to forces queue to prevent race condition.
             Vector3 velocityDirection = advMovement.XYZForce3.normalized;
             Vector3 boostVelocity = velocityDirection * boostSpeed;
-            advMovement.XYZForce3 += boostVelocity;
+            advMovement.AddPendingLaunch(boostVelocity);
             
             EndAbility();
         }
